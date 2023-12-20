@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class EntityManagerHelper {
 	private static final EntityManagerFactory emf = new HibernatePersistenceProvider()
-			.createContainerEntityManagerFactory(new MyPersistenceUnitInfo(), new HashMap<>());;
+			.createContainerEntityManagerFactory(new MyPersistenceUnitInfo(), new HashMap<>());
 	private static EntityManager em;
 	public static EntityManager getEntityManager() {
 		if (em == null) {
