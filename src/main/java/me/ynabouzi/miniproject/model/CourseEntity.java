@@ -25,9 +25,9 @@ public class CourseEntity {
 	@Enumerated(EnumType.STRING)
 	private Major major;
 
-	@OneToMany(mappedBy = "course_student")
+	@OneToMany(mappedBy = "course_student", cascade = CascadeType.ALL)
 	private Set<StudentEntity> students;
 
-	@OneToMany(mappedBy = "course_item")
+	@OneToMany(mappedBy = "course_parent", cascade = CascadeType.ALL)
 	private Set<CourseItemEntity> courseItems;
 }

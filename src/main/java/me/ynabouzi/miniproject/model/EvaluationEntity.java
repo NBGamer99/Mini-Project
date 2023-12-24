@@ -16,6 +16,6 @@ public class EvaluationEntity {
 	private String type;
 	private Double coefficient;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CourseItemEntity courseItem;
 }

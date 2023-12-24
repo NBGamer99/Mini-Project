@@ -60,15 +60,8 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public void updateCourse(CourseEntity Newcourse, long oldId) {
-		try {
-			entityManager.getTransaction().begin();
-			Newcourse.setId(oldId);
-			entityManager.merge(Newcourse);
-			entityManager.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
+	public void updateCourse(CourseEntity Newcourse, Long oldId) {
+		Newcourse.setId(oldId);
+		this.saveCourse(Newcourse);
 	}
 }

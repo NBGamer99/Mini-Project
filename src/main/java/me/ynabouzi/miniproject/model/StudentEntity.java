@@ -18,7 +18,7 @@ public class StudentEntity{
 	private String surname;
 	private String studentCode;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private  CourseEntity course_student;
 
 }

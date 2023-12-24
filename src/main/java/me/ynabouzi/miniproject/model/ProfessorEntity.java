@@ -21,7 +21,7 @@ public class ProfessorEntity {
 	private String speciality;
 	private String code;
 
-	@OneToMany(mappedBy = "professor_item")
+	@OneToMany(mappedBy = "professor_item",cascade = CascadeType.ALL)
 	private Set<CourseItemEntity> courseItems;
 
 }

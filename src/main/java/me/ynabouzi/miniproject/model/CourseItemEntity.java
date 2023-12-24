@@ -17,12 +17,12 @@ public class CourseItemEntity {
 	private String name;
 	private Double coefficient;
 
-	@ManyToOne
-	private CourseEntity course_item;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private CourseEntity course_parent;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private ProfessorEntity professor_item;
 
-	@OneToMany(mappedBy = "courseItem")
+	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.ALL)
 	private Set<EvaluationEntity> evaluations;
 }
