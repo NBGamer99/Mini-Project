@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "professors", schema = "MINI_PROJET")
 public class ProfessorEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,6 +21,9 @@ public class ProfessorEntity {
 	private String lastName;
 	private String speciality;
 	private String code;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private UserEntity user_professor;
 
 	@OneToMany(mappedBy = "professor_item",cascade = CascadeType.ALL)
 	private Set<CourseItemEntity> courseItems;

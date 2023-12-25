@@ -23,7 +23,7 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 			entityManager.merge(professor);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return professor;
@@ -31,32 +31,53 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 
 	@Override
 	public ProfessorEntity getProfessorById(Long id) {
-		return entityManager.find(ProfessorEntity.class, id);
+		ProfessorEntity professor = null;
+		try {
+			professor = entityManager.find(ProfessorEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return professor;
 	}
 
 	@Override
 	public ProfessorEntity getProfessorByLastName(String name) {
-		return entityManager.createQuery("SELECT p FROM ProfessorEntity p WHERE p.last_name = :last_name", ProfessorEntity.class)
-				.setParameter("last_name", name)
-				.getSingleResult();
+		ProfessorEntity professor = null;
+		try {
+			professor = entityManager.createQuery("SELECT p FROM ProfessorEntity p WHERE p.lastName = :name", ProfessorEntity.class)
+					.setParameter("name", name)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return professor;
 	}
 
 	@Override
 	public List<ProfessorEntity> getAllProfessors() {
-		return entityManager.createQuery("SELECT p FROM ProfessorEntity p", ProfessorEntity.class).getResultList();
+		List<ProfessorEntity> professorEntities = null;
+		try {
+			professorEntities = entityManager.createQuery("SELECT p FROM ProfessorEntity p", ProfessorEntity.class).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return professorEntities;
 	}
 
 	@Override
-	public void deleteProfessor(Long id) {
-		ProfessorEntity professor = entityManager.find(ProfessorEntity.class, id);
+	public boolean deleteProfessor(Long id) {
+		ProfessorEntity professor = this.getProfessorById(id);
 		if(professor != null) {
 			entityManager.remove(professor);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateProfessor(ProfessorEntity newProfessor, Long id) {
+	public ProfessorEntity updateProfessor(ProfessorEntity newProfessor, Long id) {
 		newProfessor.setId(id);
 		this.saveProfessor(newProfessor);
+		return newProfessor;
 	}
 }

@@ -14,8 +14,8 @@ public interface UserEntityDAO {
 
 	UserEntity saveUser(UserEntity user);
 
-	void deleteUser(Long id);
+	boolean deleteUser(Long id);
 
-	void updateUser(UserEntity user, Long id);
+	UserEntity updateUser(UserEntity user, Long id);
 
 }

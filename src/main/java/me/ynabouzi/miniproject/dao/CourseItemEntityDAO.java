@@ -14,7 +14,7 @@ public interface CourseItemEntityDAO {
 
 	List<CourseItemEntity> getAllCourseItems();
 
-	void deleteCourseItem(Long id);
+	boolean deleteCourseItem(Long id);
 
-	void updateCourseItem(CourseItemEntity newCourseItem, Long id);
+	CourseItemEntity updateCourseItem(CourseItemEntity newCourseItem, Long id);
 }

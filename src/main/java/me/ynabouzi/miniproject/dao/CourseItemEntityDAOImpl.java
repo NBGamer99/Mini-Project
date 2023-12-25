@@ -25,7 +25,7 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 			entityManager.merge(courseItem);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return courseItem;
@@ -33,45 +33,53 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 
 	@Override
 	public CourseItemEntity getCourseItemById(Long id) {
-		return entityManager.find(CourseItemEntity.class, id);
+		CourseItemEntity courseItem = null;
+		try {
+			courseItem = entityManager.find(CourseItemEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return courseItem;
 	}
 
 	@Override
 	public List<CourseItemEntity> getCourseItemByCourseId(Long id) {
-		try
-		{
-			return entityManager.createQuery("SELECT c FROM CourseItemEntity c WHERE c.course_parent.id = :id", CourseItemEntity.class)
+		List<CourseItemEntity> courseItemEntities = null;
+		try {
+			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c WHERE c.course_parent.id = :id", CourseItemEntity.class)
 					.setParameter("id", id)
 					.getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
+		return courseItemEntities;
 	}
 
 	@Override
 	public List<CourseItemEntity> getAllCourseItems() {
+		List<CourseItemEntity> courseItemEntities = null;
 		try {
-			return entityManager.createQuery("SELECT c FROM CourseItemEntity c", CourseItemEntity.class).getResultList();
+			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c", CourseItemEntity.class).getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
 		}
+		return courseItemEntities;
 	}
 
 	@Override
-	public void deleteCourseItem(Long id) {
+	public boolean deleteCourseItem(Long id) {
 		CourseItemEntity courseItem = entityManager.find(CourseItemEntity.class, id);
 		if (courseItem != null) {
 			entityManager.remove(courseItem);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateCourseItem(CourseItemEntity newCourseItem, Long id) {
+	public CourseItemEntity updateCourseItem(CourseItemEntity newCourseItem, Long id) {
 		newCourseItem.setId(id);
 		this.saveCourseItem(newCourseItem);
+		return newCourseItem;
 	}
 }

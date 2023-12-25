@@ -23,43 +23,51 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 			entityManager.merge(evaluationEntity);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return evaluationEntity;
 	}
 	@Override
 	public EvaluationEntity getEvaluationEntityById(Long id) {
-			return entityManager.find(EvaluationEntity.class, id);
+		EvaluationEntity evaluationEntity = null;
+		try {
+			evaluationEntity = entityManager.find(EvaluationEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return evaluationEntity;
 	}
 
 	@Override
 	public List<EvaluationEntity> getEvaluationEntityByCourseId(Long courseId) {
-
+		List<EvaluationEntity> evaluationEntities = null;
 		try
 		{
-			return entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseItem.id = :id", EvaluationEntity.class)
-					.setParameter("id", courseId)
-					.getResultList();
-		}
+			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseId = :courseId", EvaluationEntity.class)
+					.setParameter("courseId", courseId)
+					.getResultList();}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
 		}
+		return evaluationEntities;
 	}
 
 	@Override
-	public void deleteEvaluationEntity(Long id) {
+	public boolean deleteEvaluationEntity(Long id) {
 		EvaluationEntity evaluationEntity = entityManager.find(EvaluationEntity.class, id);
 		if(evaluationEntity != null) {
 			entityManager.remove(evaluationEntity);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateEvaluationEntity(EvaluationEntity newEvaluationEntity, Long id) {
+	public EvaluationEntity updateEvaluationEntity(EvaluationEntity newEvaluationEntity, Long id) {
 		newEvaluationEntity.setId(id);
 		this.saveEvaluationEntity(newEvaluationEntity);
+		return newEvaluationEntity;
 	}
 }

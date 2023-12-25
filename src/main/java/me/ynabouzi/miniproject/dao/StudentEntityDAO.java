@@ -14,8 +14,8 @@ public interface StudentEntityDAO {
 
 	StudentEntity saveStudent(StudentEntity student);
 
-	void deleteStudent(Long id);
+	boolean deleteStudent(Long id);
 
-	void updateStudent(StudentEntity student, Long id);
+	StudentEntity updateStudent(StudentEntity student, Long id);
 
 }

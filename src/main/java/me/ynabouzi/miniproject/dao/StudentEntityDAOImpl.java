@@ -3,6 +3,7 @@ package me.ynabouzi.miniproject.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import me.ynabouzi.miniproject.model.StudentEntity;
+import me.ynabouzi.miniproject.model.UserEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
@@ -18,24 +19,37 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 
 	@Override
 	public StudentEntity getStudentById(Long id) {
-		return entityManager.find(StudentEntity.class, id);
+		StudentEntity student = null;
+		try {
+			student = entityManager.find(StudentEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return student;
 	}
 
 	@Override
 	public StudentEntity getStudentByLastName(String name) {
-		return entityManager.createQuery("SELECT s FROM StudentEntity s WHERE s.lastName = :name", StudentEntity.class)
-				.setParameter("name", name)
-				.getSingleResult();
+		StudentEntity student = null;
+		try {
+			student = entityManager.createQuery("SELECT s FROM StudentEntity s WHERE s.lastName = :name", StudentEntity.class)
+					.setParameter("name", name)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return student;
 	}
 
 	@Override
 	public List<StudentEntity> getAllStudents() {
-		try{
-			return entityManager.createQuery("SELECT s FROM StudentEntity s", StudentEntity.class).getResultList();
+		List<StudentEntity> studentEntities = null;
+		try {
+			studentEntities = entityManager.createQuery("SELECT s FROM StudentEntity s", StudentEntity.class).getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
 		}
+		return studentEntities;
 	}
 
 	@Override
@@ -45,23 +59,26 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 			entityManager.merge(student);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return student;
 	}
 
 	@Override
-	public void deleteStudent(Long id) {
-		StudentEntity student = entityManager.find(StudentEntity.class, id);
+	public boolean deleteStudent(Long id) {
+		StudentEntity student = this.getStudentById(id);
 		if(student != null) {
 			entityManager.remove(student);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateStudent(StudentEntity newStudent, Long id) {
+	public StudentEntity updateStudent(StudentEntity newStudent, Long id) {
 		newStudent.setId(id);
 		this.saveStudent(newStudent);
+		return newStudent;
 	}
 }

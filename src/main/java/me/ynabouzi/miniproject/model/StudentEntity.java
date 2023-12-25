@@ -9,13 +9,14 @@ import lombok.*;
 @EqualsAndHashCode
 @Entity
 @Table(name = "students", schema = "MINI_PROJET")
-public class StudentEntity{
+public class StudentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String firstName;
 	private String lastName;
+	@Column(unique = true)
 	private String studentCode;
 
 	@ManyToOne(cascade = CascadeType.ALL)

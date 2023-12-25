@@ -14,7 +14,7 @@ public interface ProfessorEntityDAO {
 
 	ProfessorEntity saveProfessor(ProfessorEntity professor);
 
-	void deleteProfessor(Long id);
+	boolean deleteProfessor(Long id);
 
-	void updateProfessor(ProfessorEntity professor, Long id);
+	ProfessorEntity updateProfessor(ProfessorEntity professor, Long id);
 }

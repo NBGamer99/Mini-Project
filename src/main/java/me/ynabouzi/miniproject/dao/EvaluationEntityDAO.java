@@ -12,8 +12,8 @@ public interface EvaluationEntityDAO {
 
 	EvaluationEntity saveEvaluationEntity(EvaluationEntity evaluationEntity);
 
-	void deleteEvaluationEntity(Long id);
+	boolean deleteEvaluationEntity(Long id);
 
-	void updateEvaluationEntity(EvaluationEntity newEvaluationEntity, Long id);
+	EvaluationEntity updateEvaluationEntity(EvaluationEntity newEvaluationEntity, Long id);
 
 }

@@ -30,7 +30,7 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 			entityManager.merge(course);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return course;
@@ -38,30 +38,40 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 
 	@Override
 	public CourseEntity getCourseById(Long id) {
-		return entityManager.find(CourseEntity.class, id);
+		CourseEntity course = null;
+		try {
+			course = entityManager.find(CourseEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return course;
 	}
 
 	@Override
 	public List<CourseEntity> getAllCourses() {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<CourseEntity> cq = cb.createQuery(CourseEntity.class);
-		Root<CourseEntity> root = cq.from(CourseEntity.class);
-		cq.select(root);
-		TypedQuery<CourseEntity> query = entityManager.createQuery(cq);
-		return query.getResultList();
+		List<CourseEntity> courseEntities = null;
+		try {
+			courseEntities = entityManager.createQuery("SELECT c FROM CourseEntity c", CourseEntity.class).getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return courseEntities;
 	}
 
 	@Override
-	public void deleteCourse(Long id) {
+	public boolean deleteCourse(Long id) {
 		CourseEntity course = entityManager.find(CourseEntity.class, id);
 		if (course != null) {
 			entityManager.remove(course);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateCourse(CourseEntity Newcourse, Long oldId) {
+	public CourseEntity updateCourse(CourseEntity Newcourse, Long oldId) {
 		Newcourse.setId(oldId);
 		this.saveCourse(Newcourse);
+		return Newcourse;
 	}
 }

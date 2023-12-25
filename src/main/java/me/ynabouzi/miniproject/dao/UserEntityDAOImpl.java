@@ -18,22 +18,37 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 
 	@Override
 	public UserEntity getUserById(Long id) {
-		return entityManager.find(UserEntity.class, id);
+		UserEntity user = null;
+		try {
+			user = entityManager.find(UserEntity.class, id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return user;
 	}
 
 	@Override
 	public UserEntity getUserByUsername(String username) {
-		return entityManager.find(UserEntity.class, username);
+		UserEntity user = null;
+		try {
+			user = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class)
+					.setParameter("username", username)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return user;
 	}
 
 	@Override
 	public List<UserEntity> getAllUsers() {
+		List<UserEntity> userEntities = null;
 		try {
-			return entityManager.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
+			userEntities = entityManager.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			System.out.println(e.getMessage());
 		}
+		return userEntities;
 	}
 
 	@Override
@@ -43,23 +58,26 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 			entityManager.merge(user);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			entityManager.getTransaction().rollback();
 		}
 		return user;
 	}
 
 	@Override
-	public void deleteUser(Long id) {
-		UserEntity user = entityManager.find(UserEntity.class, id);
+	public boolean deleteUser(Long id) {
+		UserEntity user = this.getUserById(id);
 		if(user != null) {
 			entityManager.remove(user);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
-	public void updateUser(UserEntity user, Long id) {
+	public UserEntity updateUser(UserEntity user, Long id) {
 		user.setId(id);
 		this.saveUser(user);
+		return user;
 	}
 }
