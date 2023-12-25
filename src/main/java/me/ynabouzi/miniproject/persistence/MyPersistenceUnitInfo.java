@@ -46,7 +46,7 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/MINI_PROJET?createDatabaseIfNotExist=true");
 		config.setUsername("root");
-		config.setPassword("1234");
+		config.setPassword("");
 		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
 		return new HikariDataSource(config);
