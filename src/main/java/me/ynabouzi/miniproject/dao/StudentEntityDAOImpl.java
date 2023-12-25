@@ -22,8 +22,10 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public StudentEntity getStudentByName(String name) {
-		return entityManager.find(StudentEntity.class, name);
+	public StudentEntity getStudentByLastName(String name) {
+		return entityManager.createQuery("SELECT s FROM StudentEntity s WHERE s.lastName = :name", StudentEntity.class)
+				.setParameter("name", name)
+				.getSingleResult();
 	}
 
 	@Override

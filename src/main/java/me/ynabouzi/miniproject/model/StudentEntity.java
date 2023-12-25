@@ -14,8 +14,8 @@ public class StudentEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private String surname;
+	private String firstName;
+	private String lastName;
 	private String studentCode;
 
 	@ManyToOne(cascade = CascadeType.ALL)

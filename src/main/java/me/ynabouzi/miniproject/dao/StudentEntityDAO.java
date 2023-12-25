@@ -8,7 +8,7 @@ public interface StudentEntityDAO {
 
 	StudentEntity getStudentById(Long id);
 
-	StudentEntity getStudentByName(String name);
+	StudentEntity getStudentByLastName(String name);
 
 	List<StudentEntity> getAllStudents();
 

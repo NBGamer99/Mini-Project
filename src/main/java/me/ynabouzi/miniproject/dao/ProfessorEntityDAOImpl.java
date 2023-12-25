@@ -35,8 +35,10 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public ProfessorEntity getProfessorByName(String name) {
-		return entityManager.find(ProfessorEntity.class, name);
+	public ProfessorEntity getProfessorByLastName(String name) {
+		return entityManager.createQuery("SELECT p FROM ProfessorEntity p WHERE p.last_name = :last_name", ProfessorEntity.class)
+				.setParameter("last_name", name)
+				.getSingleResult();
 	}
 
 	@Override

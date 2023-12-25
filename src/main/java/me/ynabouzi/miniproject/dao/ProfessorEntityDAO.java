@@ -8,7 +8,7 @@ public interface ProfessorEntityDAO {
 
 	ProfessorEntity getProfessorById(Long id);
 
-	ProfessorEntity getProfessorByName(String name);
+	ProfessorEntity getProfessorByLastName(String name);
 
 	List<ProfessorEntity> getAllProfessors();
 
