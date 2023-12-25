@@ -3,6 +3,7 @@ package me.ynabouzi.miniproject.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import me.ynabouzi.miniproject.model.StudentEntity;
+import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public StudentEntityDAOImpl(EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public StudentEntityDAOImpl() {
+		this.entityManager = EntityManagerHelper.getEntityManager();
 	}
 
 	@Override
