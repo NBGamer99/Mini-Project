@@ -22,8 +22,11 @@ public class CourseEntity {
 	@Enumerated(EnumType.STRING)
 	private Semester semester;
 
+	@ElementCollection(targetClass = Major.class)
 	@Enumerated(EnumType.STRING)
-	private Major major;
+	@CollectionTable(name = "course_major", joinColumns = @JoinColumn(name = "course_id"))
+	@Column(name = "major")
+	private Set<Major> majors;
 
 	@OneToMany(mappedBy = "course_student", cascade = CascadeType.ALL)
 	private Set<StudentEntity> students;

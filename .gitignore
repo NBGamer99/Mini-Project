@@ -35,5 +35,8 @@ build/
 ### VS Code ###
 .vscode/
 
+### Main java ###
+#Main.java
+
 ### Mac OS ###
 .DS_Store
