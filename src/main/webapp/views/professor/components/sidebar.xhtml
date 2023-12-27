@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+        <h:panelGroup layout="block" id="layout-menu" styleClass="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="../../../index.xhtml" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <!-- Your SVG content here -->
+            </span>
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">PROF SPACE</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- Layouts -->
+                <li class="menu-item">
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Courses</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="../courses/courses-list.xhtml" class="menu-link">
+                            <div data-i18n="Without menu">Courses List</div>
+                        </a>
+                    </li>
+
+
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Students</span>
+                </li>
+
+
+                <li class="menu-item">
+                    <a href="../student/students-list.xhtml" class="menu-link">
+                        <div data-i18n="Account">Students List</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Evaluations</span>
+                </li>
+
+                <li class="menu-item">
+                    <a href="../grades/grades-list.xhtml" class="menu-link">
+                        <div data-i18n="Account">Grades</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="../grades/manage-grades.xhtml" class="menu-link">
+                        <div data-i18n="Account">Manage grades</div>
+                    </a>
+                </li>
+            </ul>
+        </h:panelGroup>
+        <!-- / Menu -->
+
+
+</ui:composition>
