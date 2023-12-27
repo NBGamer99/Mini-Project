@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view>
+
+<h:head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+   <title>Register</title>
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/x-icon" href="resources/img/favicon/favicon.ico" />
+
+   <!-- Fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com"  />
+   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+
+   <!-- Icons -->
+   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+
+   <!-- Core CSS -->
+   <h:outputStylesheet name="vendor/css/core.css" class="template-customizer-core-css" />
+   <h:outputStylesheet name="vendor/css/theme-default.css" class="template-customizer-theme-css" />
+   <h:outputStylesheet name="css/demo.css" />
+
+   <!-- Vendors CSS -->
+   <h:outputStylesheet name="vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+   <!-- Page CSS -->
+   <h:outputStylesheet name="vendor/css/pages/page-auth.css" />
+</h:head>
+
+<h:body>
+   <!-- Content -->
+   <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+         <div class="authentication-inner">
+            <!-- Register Card -->
+            <div class="card">
+               <div class="card-body">
+                  <!-- Logo -->
+                  <div class="app-brand justify-content-center">
+                     <a href="index.xhtml" class="app-brand-link gap-2">
+                                <span class="app-brand-logo demo">
+                                </span>
+                        <span class="app-brand-text demo text-body fw-bolder">ENSA</span>
+                     </a>
+                  </div>
+                  <!-- /Logo -->
+                  <h4 class="mb-2">Adventure starts here 🚀</h4>
+                  <p class="mb-4">Make your app management easy and fun!</p>
+
+                  <h:form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                     <div class="mb-3">
+                        <h:outputLabel for="username" class="form-label">Username</h:outputLabel>
+                        <h:inputText type="text" class="form-control" id="username" name="username" placeholder="Enter your username" value="#{RegistrationController.username}" />
+                     </div>
+                     <div class="mb-3">
+                        <h:outputLabel for="password" class="form-label">Password</h:outputLabel>
+                        <div class="input-group input-group-merge">
+                           <h:inputSecret type="password" id="password" class="form-control" name="password" value="#{RegistrationController.password}" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                           <span class="input-group-text cursor-pointer"><i class="bx bx-hide"/></span>
+                        </div>
+                     </div>
+                     <div class="mb-3 form-password-toggle">
+                        <h:outputLabel class="form-label" for="confirmPassword">Confirm Password</h:outputLabel>
+                        <div class="input-group input-group-merge">
+                           <h:inputSecret type="password" id="confirmPassword" class="form-control" name="confirmPassword" value="#{RegistrationController.confirmPassword}" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                           <span class="input-group-text cursor-pointer"><i class="bx bx-hide"/></span>
+                        </div>
+                     </div>
+
+                     <div class="mb-3">
+                        <div class="form-check">
+                           <h:selectBooleanCheckbox class="form-check-input" id="terms-conditions" name="terms" value="#{RegistrationController.agreeToTerms}"/>
+                           <h:outputLabel class="form-check-label" for="terms-conditions">
+                              I agree to
+                              <a href="javascript:void(0);">privacy policy &amp; terms</a>
+                           </h:outputLabel>
+                        </div>
+                     </div>
+
+                     <h:outputText value="#{ErrorMessageController.errorMessage}"  style="color: indianred"/>
+
+                     <h:commandButton value="Sign up" action="#{RegistrationController.register()}" styleClass="btn btn-primary d-grid mt-2 w-100" />
+                  </h:form>
+
+                  <p class="text-center">
+                     <span>Already have an account?</span>
+                     <a href="login.xhtml">
+                        <span>Sign in instead</span>
+                     </a>
+                  </p>
+               </div>
+            </div>
+            <!-- Register Card -->
+         </div>
+      </div>
+   </div>
+
+   <!-- build:js assets/vendor/js/core.js -->
+   <h:outputScript name="vendor/libs/jquery/jquery.js"/>
+   <h:outputScript name="vendor/libs/popper/popper.js"/>
+   <h:outputScript name="vendor/js/bootstrap.js"/>
+   <h:outputScript name="vendor/libs/perfect-scrollbar/perfect-scrollbar.js"/>
+
+   <h:outputScript name="vendor/js/menu.js"/>
+   <!-- endbuild -->
+
+   <!-- Vendors JS -->
+
+   <!-- Main JS -->
+   <h:outputScript library="js" name="main.js"/>
+
+</h:body>
+</f:view>
+</html>

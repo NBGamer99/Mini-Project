@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+   <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+</f:metadata>
+
+   <f:view>
+      <h:head>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+         <title>Login </title>
+         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+
+         <link rel="preconnect" href="https://fonts.googleapis.com" />
+         <link rel="preconnect" href="https://fonts.gstatic.com"  />
+         <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+         <h:outputStylesheet  name="vendor/css/core.css" />
+         <h:outputStylesheet  name="vendor/css/theme-default.css" />
+         <h:outputStylesheet library="css" name="demo.css" />
+         <h:outputStylesheet  name="vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+         <h:outputStylesheet  name="vendor/css/pages/page-auth.css" />
+      </h:head>
+
+
+      <h:body>
+         <div class="container-xxl">
+            <div class="authentication-wrapper authentication-basic container-p-y">
+               <div class="authentication-inner">
+                  <!-- Register -->
+                  <div class="card">
+                     <div class="card-body">
+                        <!-- Logo -->
+                        <div class="app-brand justify-content-center">
+                           <a href="index.xhtml" class="app-brand-link gap-2">
+                                      <span class="app-brand-logo demo">
+                                      </span>
+                              <span class="app-brand-text demo text-body fw-bolder">ENSA</span>
+                           </a>
+                        </div>
+                        <!-- /Logo -->
+                        <h4 class="mb-2">Welcome BACK! 👋</h4>
+                        <p class="mb-4">Please sign-in to your account</p>
+                        <h:form id="formAuthentication" class="mb-3">
+                           <div class="mb-3">
+                              <h:outputLabel for="username" value="Username" />
+                              <h:inputText type="text" value="#{UserBean.username}" id="username" class="form-control" name="email-username" placeholder="Enter your email or username"  />
+                           </div>
+                           <div class="mb-3 form-password-toggle">
+                              <div class="d-flex justify-content-between">
+                                 <h:outputLabel class="form-label" for="password" value="Password" />
+                              </div>
+                              <div class="input-group input-group-merge">
+                                 <h:inputSecret id="password" value="#{UserBean.password}" type="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                              </div>
+                           </div>
+
+                              <h:outputText value="#{ErrorMessageController.errorMessage}" styleClass="m-1" style="color: indianred"/>
+                           <div class="my-3">
+                              <h:commandButton value="Sign in" class="btn btn-primary d-grid w-100" action="#{LoginController.login()}"/>
+                           </div>
+                        </h:form>
+                        <p class="text-center">
+                           <span>New on our platform?</span>
+                           <a href="register.xhtml">
+                              <span>Create an account</span>
+                           </a>
+                        </p>
+                     </div>
+                  </div>
+                  <!-- /Register -->
+               </div>
+            </div>
+         </div>
+
+         <h:outputScript  name="vendor/libs/jquery/jquery.js" />
+         <h:outputScript  name="vendor/libs/popper/popper.js" />
+         <h:outputScript  name="vendor/js/bootstrap.js" />
+         <h:outputScript  name="vendor/libs/perfect-scrollbar/perfect-scrollbar.js" />
+         <h:outputScript  name="vendor/js/menu.js" />
+         <h:outputScript library="js" name="main.js" />
+
+      </h:body>
+   </f:view>
+
+</html>
