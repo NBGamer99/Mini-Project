@@ -7,6 +7,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import me.ynabouzi.miniproject.enums.Users;
 
 import java.io.Serializable;
 
@@ -18,5 +19,6 @@ import java.io.Serializable;
 public class UserBean implements Serializable {
 	private String username;
 	private String password;
+	private Users role;
 	private boolean loggedIn = false;
 }

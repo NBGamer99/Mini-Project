@@ -1,4 +1,4 @@
-package me.ynabouzi.miniproject.controllers;
+package me.ynabouzi.miniproject.controllers.login;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -6,6 +6,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import me.ynabouzi.miniproject.controllers.error.ErrorMessageController;
 import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
 import me.ynabouzi.miniproject.enums.Users;
 import me.ynabouzi.miniproject.model.UserEntity;
@@ -61,6 +62,6 @@ public class RegistrationController {
 		userService.saveUser(user);
 		errorMessageController.setErrorMessage("Registration Successful");
 
-		return "login?faces-redirect=true";
+		return "index?faces-redirect=true";
 	}
 }

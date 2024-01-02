@@ -67,9 +67,15 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 	@Override
 	public boolean deleteUser(Long id) {
 		UserEntity user = this.getUserById(id);
-		if(user != null) {
-			entityManager.remove(user);
-			return true;
+		try {
+			if(user != null) {
+				entityManager.getTransaction().begin();
+				entityManager.remove(user);
+				entityManager.getTransaction().commit();
+				return true;
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
 		}
 		return false;
 	}
