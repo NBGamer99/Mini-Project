@@ -17,11 +17,11 @@ public class EntityManagerHelper {
 			.jdbcPassword("1234")
 			.persistenceUnitName("default")
 			.hibernateFormatSql("true")
-			.hibernateHbm2ddlAuto("update")
 			.hibernateShowSql("true")
+			.databaseAction("update")
 			.setManagedClassNames(List.of("me.ynabouzi.miniproject.model.StudentEntity",
-					"me.ynabouzi.miniproject.model.CourseEntity",
 					"me.ynabouzi.miniproject.model.CourseItemEntity",
+					"me.ynabouzi.miniproject.model.CourseEntity",
 					"me.ynabouzi.miniproject.model.EvaluationEntity",
 					"me.ynabouzi.miniproject.model.ProfessorEntity",
 					"me.ynabouzi.miniproject.model.UserEntity"))

@@ -22,7 +22,7 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 	private static String JDBC_DRIVER;
 	private static String JDBC_PASSWORD;
 	private static String PERSISTENCE_UNIT_NAME;
-	private static String HIBERNATE_HBM2DDL_AUTO;
+	private static String DATABASE_ACTION;
 	private static String HIBERNATE_SHOW_SQL;
 	private static String HIBERNATE_FORMAT_SQL;
 
@@ -33,7 +33,7 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 		private String jdbcDriver;
 		private String jdbcPassword;
 		private String persistenceUnitName;
-		private String hibernateHbm2ddlAuto;
+		private String databaseAction;
 		private String hibernateShowSql;
 		private String hibernateFormatSql;
 
@@ -62,8 +62,9 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 			return this;
 		}
 
-		public Builder hibernateHbm2ddlAuto(String hibernateHbm2ddlAuto) {
-			this.hibernateHbm2ddlAuto = hibernateHbm2ddlAuto;
+		public Builder databaseAction(String databaseAction)
+		{
+			this.databaseAction = databaseAction;
 			return this;
 		}
 
@@ -89,7 +90,7 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 			JDBC_DRIVER = this.jdbcDriver;
 			JDBC_PASSWORD = this.jdbcPassword;
 			PERSISTENCE_UNIT_NAME = this.persistenceUnitName;
-			HIBERNATE_HBM2DDL_AUTO = this.hibernateHbm2ddlAuto;
+			DATABASE_ACTION = this.databaseAction;
 			HIBERNATE_SHOW_SQL = this.hibernateShowSql;
 			HIBERNATE_FORMAT_SQL = this.hibernateFormatSql;
 			MANAGED_CLASS_NAMES = this.managedClassNames;
@@ -132,9 +133,12 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
 	@Override
 	public Properties getProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
 		properties.setProperty("hibernate.show_sql", HIBERNATE_SHOW_SQL);
 		properties.setProperty("hibernate.format_sql", HIBERNATE_FORMAT_SQL);
+		properties.setProperty("jakarta.persistence.schema-generation.database.action", DATABASE_ACTION);
+		properties.setProperty("jakarta.persistence.schema-generation.create-source", "metadata");
+		properties.setProperty("jakarta.persistence.schema-generation.drop-source", "script");
+		properties.setProperty("jakarta.persistence.schema-generation.drop-script-source", "META-INF/drop.sql");
 		return properties;
 	}
 
