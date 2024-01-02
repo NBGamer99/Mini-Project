@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 @ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "students", schema = "MINI_PROJET")
 public class StudentEntity {

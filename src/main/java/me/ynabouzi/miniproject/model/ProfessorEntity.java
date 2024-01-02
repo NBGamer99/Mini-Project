@@ -7,7 +7,6 @@ import lombok.ToString;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode
 @Entity
 @Table(name = "professors", schema = "MINI_PROJET")
 public class ProfessorEntity {

@@ -9,7 +9,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode
 @Entity
 @Table(name = "courses", schema = "MINI_PROJET")
 public class CourseEntity {

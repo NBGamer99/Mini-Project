@@ -17,6 +17,7 @@ import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -41,8 +42,10 @@ public class AddCourseItemsController implements Serializable {
 		courseItem.setProfessor(professorEntity);
 		courseItem.setCourse(courseEntity);
 
-		List<CourseItemEntity> listOfAllCourseItems = courseEntity.getCourseItems();
+		List<CourseItemEntity> listOfAllCourseItems = new ArrayList<>();
 		listOfAllCourseItems.add(courseItem);
+		if (courseEntity.getCourseItems() != null)
+			listOfAllCourseItems.addAll(courseEntity.getCourseItems());
 
 		courseEntity.setCourseItems(listOfAllCourseItems);
 

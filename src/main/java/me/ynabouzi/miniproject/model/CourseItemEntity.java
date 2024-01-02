@@ -5,7 +5,6 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode
 @Entity
 @Table(name = "course_items", schema = "MINI_PROJET")
 public class CourseItemEntity {
@@ -33,8 +32,8 @@ public class CourseItemEntity {
 				", name='" + name + '\'' +
 				", coefficient=" + coefficient +
 //				", course_parent=" + course +
-				", professor_item=" + professor +
-				", evaluations=" + evaluations +
+//				", professor_item=" + professor +
+//				", evaluations=" + evaluations +
 				'}';
 	}
 }

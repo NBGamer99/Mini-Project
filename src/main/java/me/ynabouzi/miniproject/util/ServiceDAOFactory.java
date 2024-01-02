@@ -4,6 +4,7 @@ import me.ynabouzi.miniproject.dao.*;
 
 public class ServiceDAOFactory {
 
+	protected static EvaluationEntityDAOImpl evaluationService;
 	protected static CourseEntityDAOImpl courseService;
 
 	protected static CourseItemEntityDAOImpl courseItemService;
@@ -13,6 +14,14 @@ public class ServiceDAOFactory {
 	protected static StudentEntityDAOImpl studentService;
 
 	protected static UserEntityDAOImpl userService;
+
+
+public static EvaluationEntityDAOImpl getEvaluationService() {
+		if (evaluationService == null) {
+			evaluationService = new EvaluationEntityDAOImpl();
+		}
+		return evaluationService;
+	}
 
 	public static CourseEntityDAOImpl getCourseService() {
 		if (courseService == null) {

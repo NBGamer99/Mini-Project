@@ -6,7 +6,6 @@ import me.ynabouzi.miniproject.enums.Users;
 
 @Data
 @ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "users", schema = "MINI_PROJET")
 public class UserEntity {
