@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+
+<f:metadata>
+    <f:viewAction action="#{ProfessorBean.changeValues()}"/>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+</f:metadata>
+
+<ui:composition template="../../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Professors /</span>New Professor</h4>
+
+                <!-- Add Professor Form -->
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">Add Professor</h5>
+                            <small class="text-muted float-end">Professor details</small>
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="professorFirstName">First Name</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-id-card"></i></span>
+                                          <h:inputText type="text" id="professorFirstName" name="professorFirstName"
+                                                           value="#{ProfessorBean.professorEntity.firstName}" class="form-control"
+                                                           a:placeholder="New Professor Name"
+                                                           aria-label="New Professor Name"
+                                                        required="true"
+                                                        requiredMessage="First Name is required"
+                                          />
+                                        </div>
+                                        <h:message for="professorFirstName" style="color: red"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="professorLastName">Last Name</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-user"></i></span>
+
+
+                                            <h:inputText type="text" id="professorLastName" name="professorLastName"
+                                                           value="#{ProfessorBean.professorEntity.lastName}" class="form-control"
+                                                           a:placeholder="New Professor Last Name"
+                                                           aria-label="New Professor Last Name"
+                                                        required="true"
+                                                        requiredMessage="Last Name is required"
+                                            />
+
+                                        </div>
+                                        <h:message for="professorLastName" style="color: red"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="professorSpeciality">Speciality</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-category"></i></span>
+
+                                            <h:inputText type="text" id="professorSpeciality" name="professorSpeciality"
+                                                           value="#{ProfessorBean.professorEntity.speciality}" class="form-control"
+                                                           a:placeholder="New Professor Speciality"
+                                                           aria-label="New Professor Speciality"
+                                                        required="true"
+                                                        requiredMessage="Speciality is required"
+                                            />
+
+                                        </div>
+                                        <h:message for="professorSpeciality" style="color: red"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="professorCode">Code</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-category"></i></span>
+
+                                            <h:inputText type="text" id="professorCode" name="professorCode"
+                                                           value="#{ProfessorBean.professorEntity.code}" class="form-control"
+                                                           a:placeholder="New Professor Code"
+                                                           aria-label="New Professor Code"
+                                                        required="true"
+                                                        requiredMessage="Code is required"
+                                            />
+
+                                        </div>
+                                        <h:message for="professorCode" style="color: red"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="professorCourseItems">Course Items</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-category"></i></span>
+
+                                         <h:selectManyListbox id="professorCourseItems" name="professorCourseItems"
+                                                           value="#{ProfessorBean.selectedCoursesItems}" class="form-control"
+                                                           a:placeholder="New Professor Course Items"
+                                                           aria-label="New Professor Course Items"
+                                                              required="true"
+                                                                requiredMessage="Course Items is required"
+                                         >
+                                            <f:selectItems value="#{ProfessorBean.availableCoursesItems}" var="courseItem" itemLabel="#{courseItem.name}" itemValue="#{courseItem}"/>
+                                        </h:selectManyListbox>
+                                        </div>
+                                        <h:message for="professorCourseItems" style="color: red"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-10">
+                                        <h:commandButton value="Add new Professor" action="#{AdminAddProfessorController.addProfessor()}" class="btn btn-primary"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Add Professor Form -->
+
+                <hr class="my-5"/>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- Content wrapper -->
+    </ui:define>
+</ui:composition>
+</html>

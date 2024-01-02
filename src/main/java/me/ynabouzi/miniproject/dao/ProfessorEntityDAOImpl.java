@@ -68,7 +68,9 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	public boolean deleteProfessor(Long id) {
 		ProfessorEntity professor = this.getProfessorById(id);
 		if(professor != null) {
+			entityManager.getTransaction().begin();
 			entityManager.remove(professor);
+			entityManager.getTransaction().commit();
 			return true;
 		}
 		return false;

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+
+<f:metadata>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+</f:metadata>
+
+<ui:composition template="../../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Professors /</span>List</h4>
+                <div class="card">
+                    <h5 class="card-header">Professors List</h5>
+                    <div class="table-responsive text-nowrap text-center">
+                        <table class="table table-striped text-center">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Code</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Speciality</th>
+                                <th>Course Items</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0 text-center">
+                            <ui:fragment rendered="#{empty AdminListProfessorsController.professors}">
+                                <tr class="text-center">
+                                    <td colspan="7">Nothing to show</td>
+                                </tr>
+                            </ui:fragment>
+
+                            <ui:repeat value="#{AdminListProfessorsController.professors}" var="professor">
+                                <tr class="text-center">
+                                    <td>#{professor.id}</td>
+                                    <td>#{professor.code}</td>
+                                    <td>#{professor.firstName}</td>
+                                    <td>#{professor.lastName}</td>
+                                    <td>#{professor.speciality}</td>
+                                    <td>#{professor.professorCoursesItems}</td>
+                                    <td>
+                                        <h:form class="text-center">
+                                            <h:commandLink value="Edit" styleClass="btn-primary btn pt-1 pb-1 py-2 me-2">
+                                                <i class="bx bx-edit-alt"></i>
+                                            </h:commandLink>
+                                            <h:commandLink styleClass="btn-danger btn pt-1 pb-1 py-2" value="Delete" action="#{AdminListProfessorsController.deleteProfessor(professor.id)}">
+                                                <i class="bx bx-trash me-1"></i>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <hr class="my-5"/>
+
+                <!--/ Responsive Table -->
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- Content wrapper -->
+    </ui:define>
+</ui:composition>
+
+</html>

@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import java.util.Set;
+import java.util.List;
 
 @Data
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "professors", schema = "MINI_PROJET")
@@ -22,10 +20,39 @@ public class ProfessorEntity {
 	private String speciality;
 	private String code;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserEntity user_professor;
 
-	@OneToMany(mappedBy = "professor_item",cascade = CascadeType.ALL)
-	private Set<CourseItemEntity> courseItems;
+	@OneToMany(mappedBy = "professor",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<CourseItemEntity> courseItems;
+
+	public String FullNameTitle() {
+		return this.firstName + " " + this.lastName;
+	}
+
+	public String getProfessorCoursesItems() {
+		StringBuilder result = new StringBuilder("[");
+		for (CourseItemEntity courseItem : courseItems) {
+			if (result.length() > 1) {
+				result.append(", ");
+			}
+			result.append(courseItem.getName());
+		}
+		result.append("]");
+		return result.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "ProfessorEntity{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", speciality='" + speciality + '\'' +
+				", code='" + code + '\'' +
+//				", user_professor=" + user_professor +
+//				", courseItems=" + courseItems +
+				'}';
+	}
 
 }
