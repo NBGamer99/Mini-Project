@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<f:metadata>
+    <f:viewAction action="#{EvaluationsBean.changeValues()}"/>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+</f:metadata>
+
+<ui:composition template="../../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Evaluations /</span>New Evaluation</h4>
+                <!-- Insert Grades Form -->
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">Evaluations</h5>
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <ui:fragment rendered="#{empty EvaluationsBean.availableCourseItems}" >
+
+                                    <!--   Add a card saying must add course items first -->
+                                    <div class="alert alert-warning" role="alert">
+                                        No course items available. Please add course items first.
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment  rendered="#{not empty EvaluationsBean.availableCourseItems}">
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="courseItem">Course Item</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge ">
+                                            <span class="input-group-text"><i class="bx bx-book"></i></span>
+                                            <h:selectOneMenu id="courseItem" value="#{EvaluationsBean.selectedCourseItemId}" class="form-control" >
+                                                <f:selectItems value="#{EvaluationsBean.availableCourseItems}" var="courseItem" itemLabel="#{courseItem.name}" itemValue="#{courseItem.id}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <div class="float-end m-2">
+                                            <div class="col-sm-10">
+                                                <h:commandButton value="Get Evaluations" class="btn btn-secondary" action="#{EvaluationsBean.getEvaluations()}"/>
+                                            </div>
+                                        </div>
+                                        <div class="float-end m-2">
+                                            <div class="col-sm-10">
+                                                <h:commandButton value="Create Evaluations" class="btn btn-primary" action="#{AdminAddEvaluationsController.createEvaluations()}"/>
+                                            </div>
+                                        </div>
+                                        <ui:fragment rendered="#{empty EvaluationsBean.availableCourseItems}" >
+
+                                            <!--   Add a card saying must add course items first -->
+                                            <div class="alert alert-warning" role="alert">
+                                                evaluations Already Exists;
+                                            </div>
+                                        </ui:fragment>
+                                        <div class="float-end m-2">
+                                            <div class="col-sm-10">
+                                                <h:commandButton value="Delete Evaluations" class="btn btn-danger" action="#{AdminDeleteEvaluationsController.deleteAllEvaluations()}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </ui:fragment>
+                            </h:form>
+
+                            <h:form>
+
+
+                                <!-- Students Table -->
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+<!--                                            <th>Evaluation Id</th>-->
+                                            <th>Type</th>
+                                            <th>Coefficient</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <ui:fragment rendered="#{empty EvaluationsBean.createdEvaluations}">
+                                            <tr class="text-center">
+                                                <td colspan="3">Nothing to show</td>
+                                            </tr>
+                                        </ui:fragment>
+                                        <!-- Replace the static data with dynamic data from your backend -->
+
+                                        <ui:repeat value="#{EvaluationsBean.createdEvaluations}"  var="evaluation">
+                                            <tr>
+<!--                                                <td>#{evaluation.id}</td>-->
+                                                <td>#{evaluation.type}</td>
+                                                <td>
+                                                    <h:inputText value="#{evaluation.coefficient}" class="form-control"
+                                                        required="true"
+                                                                 id="coefficient"
+                                                                 label="Coefficient"
+                                                                 converterMessage="Coefficient must be a number"
+                                                        requiredMessage="Coefficient is required"
+                                                    />
+                                                    <h:message for="coefficient" styleClass="text-danger"/>
+
+                                                </td>
+                                            </tr>
+                                        </ui:repeat>
+
+                                        <!-- Add more rows for other students -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <ui:fragment rendered="#{not empty EvaluationsBean.createdEvaluations}">
+
+                                <div class="float-end m-2">
+                                    <div class="col-sm-10">
+                                        <h:commandButton value="Save Coefficients" class="btn btn-primary" action="#{AdminSaveEvaluationsController.saveEvaluations()}"/>
+                                    </div>
+                                </div>
+                                </ui:fragment>
+
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Insert Grades Form -->
+
+
+                <hr class="my-5"/>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- Content wrapper -->
+    </ui:define>
+</ui:composition>
+
+</html>

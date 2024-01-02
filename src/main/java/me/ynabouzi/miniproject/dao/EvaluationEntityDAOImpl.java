@@ -2,6 +2,7 @@ package me.ynabouzi.miniproject.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.EvaluationEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
@@ -40,12 +41,12 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 	}
 
 	@Override
-	public List<EvaluationEntity> getEvaluationEntityByCourseId(Long courseId) {
+	public List<EvaluationEntity> getEvaluationEntityByCourseItem(CourseItemEntity courseItem) {
 		List<EvaluationEntity> evaluationEntities = null;
 		try
 		{
-			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseId = :courseId", EvaluationEntity.class)
-					.setParameter("courseId", courseId)
+			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseItem = :courseItem", EvaluationEntity.class)
+					.setParameter("courseItem", courseItem)
 					.getResultList();}
 		catch (Exception e)
 		{
@@ -58,7 +59,9 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 	public boolean deleteEvaluationEntity(Long id) {
 		EvaluationEntity evaluationEntity = entityManager.find(EvaluationEntity.class, id);
 		if(evaluationEntity != null) {
+			entityManager.getTransaction().begin();
 			entityManager.remove(evaluationEntity);
+			entityManager.getTransaction().commit();
 			return true;
 		}
 		return false;
