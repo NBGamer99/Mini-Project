@@ -4,6 +4,8 @@ package me.ynabouzi.miniproject.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @ToString
 @EqualsAndHashCode
@@ -19,7 +21,7 @@ public class StudentEntity {
 	@Column(unique = true)
 	private String studentCode;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private  CourseEntity course_student;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<CourseEntity> course_student;
 
 }

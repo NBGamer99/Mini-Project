@@ -69,7 +69,9 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	public boolean deleteStudent(Long id) {
 		StudentEntity student = this.getStudentById(id);
 		if(student != null) {
+			entityManager.getTransaction().begin();
 			entityManager.remove(student);
+			entityManager.getTransaction().commit();
 			return true;
 		}
 		return false;

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+
+<f:metadata>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+</f:metadata>
+<ui:composition template="../../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Courses /</span>New Course</h4>
+                <!-- Update Student Form -->
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">Update Student</h5>
+                            <small class="text-muted float-end">Update student details</small>
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="studentId">ID</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-id-card"></i></span>
+                                            <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="studentId"
+                                                    name="studentId"
+                                                    placeholder="Updated Student ID"
+                                                    aria-label="Updated Student ID"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="studentName">Name</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-user"></i></span>
+                                            <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="studentName"
+                                                    name="studentName"
+                                                    placeholder="Updated Student Name"
+                                                    aria-label="Updated Student Name"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="studentMajor">Major</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-category"></i></span>
+                                            <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="studentMajor"
+                                                    name="studentMajor"
+                                                    placeholder="Updated Student Major"
+                                                    aria-label="Updated Student Major"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Include other fields for updating -->
+
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Update Student</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Update Student Form -->
+
+
+                <hr class="my-5"/>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- Content wrapper -->
+    </ui:define>
+</ui:composition>
+</html>
