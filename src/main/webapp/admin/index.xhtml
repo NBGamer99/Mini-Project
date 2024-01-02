@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+
+<f:metadata>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+</f:metadata>
+
+<ui:composition template="../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Courses /</span>All</h4>
+
+                <!-- Striped Rows -->
+                <div class="card">
+                    <h5 class="card-header">Courses list</h5>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center">Code</th>
+                                <th style="text-align: center">Majors</th>
+                                <th style="text-align: center">Name</th>
+                                <th style="text-align: center">Semester</th>
+                                <th style="text-align: center">CoursItems</th>
+                                <th style="text-align: center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                            <ui:fragment rendered="#{empty AdminListCoursesController.courses}">
+                                <tr class="text-center">
+                                    <td colspan="6">Nothing to show</td>
+                                </tr>
+                            </ui:fragment>
+                            <ui:repeat value="#{AdminListCoursesController.courses}" var="course">
+                                <tr>
+                                    <td class="text-center">
+                                        <strong>#{course.code}</strong>
+                                    </td>
+
+                                    <td style="text-align: center">#{course.majors}</td>
+                                    <td style="text-align: center">#{course.name}</td>
+                                    <td style="text-align: center"><span class="badge bg-label-primary me-1">#{course.semester}</span></td>
+                                    <td style="text-align: center">#{course.coursesItems}</td>
+                                    <td style="text-align: center">
+                                        <h:form>
+                                            <h:commandLink value="Edit" styleClass="btn-primary btn pt-1 pb-1 py-2 me-2" action="#{AdminUpdateCoursesController.redirectToEditPage(course)}" >
+                                                <i class="bx bx-edit-alt"></i>
+                                            </h:commandLink>
+                                            <h:commandLink styleClass="btn-danger btn pt-1 pb-1 py-2" value="Delete" action="#{AdminListCoursesController.deleteCourse(course.id)}" >
+                                                <i class="bx bx-trash me-1"></i>
+                                            </h:commandLink>
+                                        </h:form>
+
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <hr class="my-5"/>
+
+                <!--/ Responsive Table -->
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- Content wrapper -->
+    </ui:define>
+</ui:composition>
+</html>
