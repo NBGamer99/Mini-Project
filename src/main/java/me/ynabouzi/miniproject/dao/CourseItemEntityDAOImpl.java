@@ -22,6 +22,11 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	public CourseItemEntity saveCourseItem(CourseItemEntity courseItem) {
 		try {
 			entityManager.getTransaction().begin();
+//			entityManager.createNativeQuery("INSERT INTO course_items (name, coefficient, course_parent_id) VALUES (:name, :coefficient, :course_parent)")
+//					.setParameter("name", courseItem.getName())
+//					.setParameter("coefficient", courseItem.getCoefficient())
+//					.setParameter("course_parent", courseItem.getCourse_parent().getId())
+//					.executeUpdate();
 			entityManager.merge(courseItem);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
@@ -31,6 +36,17 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 		return courseItem;
 	}
 
+	@Override
+	public List<CourseItemEntity> getAllCourseItems() {
+		List<CourseItemEntity> courseItemEntities = null;
+		try {
+			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c", CourseItemEntity.class)
+					.getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return courseItemEntities;
+	}
 	@Override
 	public CourseItemEntity getCourseItemById(Long id) {
 		CourseItemEntity courseItem = null;
@@ -56,21 +72,12 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	}
 
 	@Override
-	public List<CourseItemEntity> getAllCourseItems() {
-		List<CourseItemEntity> courseItemEntities = null;
-		try {
-			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c", CourseItemEntity.class).getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return courseItemEntities;
-	}
-
-	@Override
 	public boolean deleteCourseItem(Long id) {
 		CourseItemEntity courseItem = entityManager.find(CourseItemEntity.class, id);
 		if (courseItem != null) {
+			entityManager.getTransaction().begin();
 			entityManager.remove(courseItem);
+			entityManager.getTransaction().commit();
 			return true;
 		}
 		return false;

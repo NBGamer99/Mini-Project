@@ -2,11 +2,9 @@ package me.ynabouzi.miniproject.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
+import java.util.List;
 
 @Data
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "course_items", schema = "MINI_PROJET")
@@ -17,12 +15,26 @@ public class CourseItemEntity {
 	private String name;
 	private Double coefficient;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private CourseEntity course_parent;
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "course_id")
+	private CourseEntity course;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private ProfessorEntity professor_item;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "professor_id")
+	private ProfessorEntity professor;
 
-	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.ALL)
-	private Set<EvaluationEntity> evaluations;
+	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	private List<EvaluationEntity> evaluations;
+
+	@Override
+	public String toString() {
+		return "CourseItemEntity{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", coefficient=" + coefficient +
+//				", course_parent=" + course +
+				", professor_item=" + professor +
+				", evaluations=" + evaluations +
+				'}';
+	}
 }
