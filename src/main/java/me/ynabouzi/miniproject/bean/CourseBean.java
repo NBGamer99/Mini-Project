@@ -1,13 +1,13 @@
 package me.ynabouzi.miniproject.bean;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.AdminController;
+import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.enums.Major;
 import me.ynabouzi.miniproject.enums.Semester;
 import me.ynabouzi.miniproject.model.CourseEntity;
@@ -35,9 +35,11 @@ public class CourseBean implements Serializable {
 	private Semester selectedSemester;
 	private CourseEntity courseEntity;
 
+	private static CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
+
 	public CourseBean() {
 		this.setCourseEntity(new CourseEntity());
-		setAvailableCourseItems(AdminController.getCourseItemService().getAllCourseItems());
+		setAvailableCourseItems(ServiceDAOFactory.getCourseItemService().getAllCourseItems());
 		setAvailableMajors(Arrays.asList(Major.values()));
 		setAvailableSemesters(Arrays.asList(Semester.values()));
 	}
@@ -45,7 +47,7 @@ public class CourseBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.setCourseEntity(new CourseEntity());
-		this.setAvailableCourseItems(AdminController.getCourseItemService().getAllCourseItems());
+		this.setAvailableCourseItems(courseItemService.getAllCourseItems());
 		if(selectedCourseItems != null && !selectedCourseItems.isEmpty())
 			selectedCourseItems.clear();
 		if (selectedMajors != null && !selectedMajors.isEmpty())

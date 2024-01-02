@@ -58,7 +58,7 @@ public class CourseEntity {
 				", semester=" + semester +
 				", majors=" + majors +
 //				", students=" + students +
-				", courseItems=" + courseItems +
+//				", courseItems=" + courseItems +
 				'}';
 	}
 }

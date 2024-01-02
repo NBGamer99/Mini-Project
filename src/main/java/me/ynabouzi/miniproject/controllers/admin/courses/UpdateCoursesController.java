@@ -7,12 +7,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.CourseBean;
-import me.ynabouzi.miniproject.util.AdminController;
+import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
 import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseEntity;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 @Setter
@@ -22,18 +21,24 @@ import java.io.Serializable;
 @RequestScoped
 public class UpdateCoursesController implements Serializable {
 
-	private CourseEntityDAOImpl courseService = AdminController.getCourseService();
-	private CourseItemEntityDAOImpl courseItemService = AdminController.getCourseItemService();
+	private CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
+	private CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
 
 
 	@Inject
 	private CourseBean courseBean;
 
-	public String redirectToEditPage(CourseEntity courseEntity){
+	private void courseSetter(CourseEntity courseEntity)
+	{
 		this.courseBean.setCourseEntity(courseEntity);
 		this.courseBean.setSelectedSemester(courseEntity.getSemester());
 		this.courseBean.setSelectedMajors(courseEntity.getMajors());
 		this.courseBean.setSelectedCourseItems(courseEntity.getCourseItems());
+	}
+
+	public String redirectToEditPage(CourseEntity courseEntity)
+	{
+		this.courseSetter(courseEntity);
 		return "/admin/courses/update-course.xhtml?faces-redirect=true";
 	}
 
