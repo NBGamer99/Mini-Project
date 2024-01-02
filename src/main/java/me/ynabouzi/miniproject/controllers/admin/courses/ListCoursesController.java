@@ -22,9 +22,7 @@ import java.util.List;
 public class ListCoursesController implements Serializable {
 
 	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
-
 	private List<CourseEntity> courses;
-
 
 	@PostConstruct
 	public void init() {

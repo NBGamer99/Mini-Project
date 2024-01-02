@@ -44,6 +44,12 @@ public class CourseBean implements Serializable {
 		setAvailableSemesters(Arrays.asList(Semester.values()));
 	}
 
+	public void changeValues() {
+		this.setAvailableCourseItems(courseItemService.getAllCourseItems());
+		this.setAvailableMajors(Arrays.asList(Major.values()));
+		this.setAvailableSemesters(Arrays.asList(Semester.values()));
+	}
+
 	@PostConstruct
 	public void init() {
 		this.setCourseEntity(new CourseEntity());
