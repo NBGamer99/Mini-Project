@@ -6,7 +6,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.AdminController;
+import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseEntity;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @RequestScoped
 public class ListCoursesController implements Serializable {
 
-	private static CourseEntityDAOImpl courseService = AdminController.getCourseService();
+	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
 
 	private List<CourseEntity> courses;
 
