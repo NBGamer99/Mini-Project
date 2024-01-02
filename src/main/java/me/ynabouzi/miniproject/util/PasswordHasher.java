@@ -16,8 +16,6 @@ public class PasswordHasher {
 			return null;
 		}
 	}
-
-	// Method to verify if a password matches its hash
 	public static boolean verifyPassword(String password, String hashedPassword) {
 		String newHash = hashPassword(password);
 		return hashedPassword.equals(newHash);
