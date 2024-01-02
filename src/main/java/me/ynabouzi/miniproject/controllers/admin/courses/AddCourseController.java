@@ -19,7 +19,7 @@ import java.io.Serializable;
 @RequestScoped
 public class AddCourseController implements Serializable {
 
-	private CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
+	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
 
 	@Inject
 	private CourseBean courseBean;

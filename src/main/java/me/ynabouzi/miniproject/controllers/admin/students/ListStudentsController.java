@@ -20,7 +20,7 @@ import java.util.List;
 @RequestScoped
 public class ListStudentsController implements Serializable
 {
-	private StudentEntityDAOImpl studentService = ServiceDAOFactory.getStudentService();
+	private static StudentEntityDAOImpl studentService = ServiceDAOFactory.getStudentService();
 
 	private List<StudentEntity> students;
 

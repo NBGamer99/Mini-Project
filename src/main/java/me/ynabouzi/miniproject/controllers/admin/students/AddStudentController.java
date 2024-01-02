@@ -19,7 +19,7 @@ import me.ynabouzi.miniproject.dao.StudentEntityDAOImpl;
 @RequestScoped
 public class AddStudentController {
 
-	private StudentEntityDAOImpl studentService = ServiceDAOFactory.getStudentService();
+	private static StudentEntityDAOImpl studentService = ServiceDAOFactory.getStudentService();
 
 	@Inject
 	private StudentBean studentBean;

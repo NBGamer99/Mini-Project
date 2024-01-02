@@ -15,15 +15,15 @@ public class CourseItemEntity {
 	private String name;
 	private Double coefficient;
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")
 	private CourseEntity course;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "professor_id")
 	private ProfessorEntity professor;
 
-	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.DETACH , fetch = FetchType.LAZY)
 	private List<EvaluationEntity> evaluations;
 
 	@Override

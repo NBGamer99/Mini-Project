@@ -21,7 +21,7 @@ public class StudentEntity {
 	@Column(unique = true)
 	private String studentCode;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private List<CourseEntity> course_student;
 
 }

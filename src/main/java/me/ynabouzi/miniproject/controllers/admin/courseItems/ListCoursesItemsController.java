@@ -22,7 +22,7 @@ public class ListCoursesItemsController implements Serializable {
 
 	private List<CourseItemEntity> courseItemEntities;
 
-	private CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
+	private static CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
 
 
 	@PostConstruct

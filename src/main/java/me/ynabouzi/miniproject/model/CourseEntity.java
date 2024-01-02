@@ -31,7 +31,6 @@ public class CourseEntity {
 	private List<StudentEntity> students;
 
 	@OneToMany(mappedBy = "course", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<CourseItemEntity> courseItems;
 
 	public String getCoursesItems() {

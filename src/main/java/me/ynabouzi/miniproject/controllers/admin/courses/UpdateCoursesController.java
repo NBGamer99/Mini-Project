@@ -21,8 +21,8 @@ import java.io.Serializable;
 @RequestScoped
 public class UpdateCoursesController implements Serializable {
 
-	private CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
-	private CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
+	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
+	private static CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
 
 
 	@Inject
