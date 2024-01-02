@@ -7,6 +7,8 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import me.ynabouzi.miniproject.controllers.error.ErrorMessageController;
+import me.ynabouzi.miniproject.util.EntityManagerHelper;
 import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
@@ -21,7 +23,9 @@ import java.util.List;
 @RequestScoped
 public class ListProfessorsController implements Serializable {
 
-	private ProfessorEntityDAOImpl professorService = ServiceDAOFactory.getProfessorService();
+	ErrorMessageController errorMessageController = new ErrorMessageController();
+
+	private static ProfessorEntityDAOImpl professorService = ServiceDAOFactory.getProfessorService();
 
 	private List<ProfessorEntity> professors;
 
@@ -36,8 +40,12 @@ public class ListProfessorsController implements Serializable {
 	}
 
 	public void deleteProfessor(Long id) {
-		if (professorService.deleteProfessor(id)) {
-			this.init();
+		try {
+			if (professorService.deleteProfessor(id)) {
+				this.init();
+			}
+		} catch (Exception e) {
+			errorMessageController.setErrorMessage("Error while deleting professor, must delete all course items first");
 		}
 	}
 

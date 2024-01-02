@@ -20,10 +20,10 @@ public class ProfessorEntity {
 	private String speciality;
 	private String code;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private UserEntity user_professor;
 
-	@OneToMany(mappedBy = "professor",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "professor",cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private List<CourseItemEntity> courseItems;
 
 	public String FullNameTitle() {
