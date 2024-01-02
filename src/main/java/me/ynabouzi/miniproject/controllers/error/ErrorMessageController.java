@@ -1,4 +1,4 @@
-package me.ynabouzi.miniproject.controllers;
+package me.ynabouzi.miniproject.controllers.error;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
@@ -15,7 +15,6 @@ import java.io.Serializable;
 @SessionScoped
 public class ErrorMessageController implements Serializable {
 	private String errorMessage;
-
 	public void triggerError(String message) {
 		errorMessage = message;
 	}
