@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+<f:metadata>
+    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+</f:metadata>
+<h:head>
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Admin Dashboard</title>
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5a8u5uG/KLrAGYbYlP0aBG5A9x1P1oWZZSEwFpo0oSMve6m" crossorigin="anonymous"/>-->
+    <!--    <link rel="icon" type="image/x-icon" href="resources/img/favicon/favicon.ico"/>-->
+
+    <h:outputStylesheet rel="icon" type="image/x-icon" name="img/favicon/favicon.ico"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css"/>
+
+    <h:outputStylesheet name="vendor/css/core.css" class="template-customizer-core-css"/>
+    <h:outputStylesheet name="vendor/css/theme-default.css" class="template-customizer-theme-css"/>
+    <h:outputStylesheet name="css/demo.css"/>
+
+    <h:outputStylesheet name="vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
+
+    <h:outputScript name="vendor/js/helpers.js"/>
+    <h:outputScript name="js/config.js"/>
+</h:head>
+
+
+<h:body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <h:panelGroup layout="block" id="layout-menu" styleClass="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="#" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <!-- Your SVG content here -->
+            </span>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">ENSA grades</span>
+                    </a>
+
+                    <a href="javascript:void(0);"
+                       class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    <!-- Layouts -->
+                    <li class="menu-item">
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text">Courses</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#{request.contextPath}/admin/courses/add-course.xhtml" class="menu-link">
+                                <div data-i18n="Without menu">Add Course</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-item">
+                            <a href="#{request.contextPath}/admin/" class="menu-link" id="#{AdminListCoursesController.init()}">
+                                <div data-i18n="Without menu">Courses List</div>
+                            </a>
+                        </li>
+
+                    </li>
+
+                    <li class="menu-item">
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text">Course Items</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#{request.contextPath}/admin/course-items/add-course-item.xhtml" class="menu-link">
+                                <div data-i18n="Without menu">Add Course Items</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+
+                            <a href="#{request.contextPath}/admin/course-items/course-item-list.xhtml" class="menu-link">
+                                <div data-i18n="Without menu">Course Items List</div>
+                            </a>
+                        </li>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Students</span>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/student/add-student.xhtml" class="menu-link">
+                            <div data-i18n="Account">Add Student</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/student/students-list.xhtml" class="menu-link">
+                            <div data-i18n="Account">Students List</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <li class="menu-header small text-uppercase">
+                            <span class="menu-header-text">Professors</span>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#{request.contextPath}/admin/professors/add-professor.xhtml" class="menu-link">
+                                <div data-i18n="Without menu">Add Professor</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+
+                            <a href="#{request.contextPath}/admin/professors/professor-list.xhtml" class="menu-link">
+                                <div data-i18n="Without menu">Professors List</div>
+                            </a>
+                        </li>
+
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Evaluations</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/evaluations/evaluations-grades.xhtml" class="menu-link">
+                            <div data-i18n="Account">Add Evaluations</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/evaluations/evaluations-list.xhtml" class="menu-link">
+                            <div data-i18n="Account">List Evaluations</div>
+                        </a>
+                    </li>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Manage User</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/manage-user/add-user.xhtml" class="menu-link">
+                            <div data-i18n="Account">Add Users</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#{request.contextPath}/admin/manage-user/users-list.xhtml" class="menu-link">
+                            <div data-i18n="Account">List Users</div>
+                        </a>
+                    </li>
+                </ul>
+            </h:panelGroup>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <h:panelGroup layout="block" styleClass="layout-page">
+                <!-- Navbar -->
+
+                <h:form>
+                    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                         id="layout-navbar">
+                        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                                <i class="bx bx-menu bx-sm"></i>
+                            </a>
+                        </div>
+
+                        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                            <!-- Search -->
+                            <div class="navbar-nav align-items-center">
+                                <div class="nav-item d-flex align-items-center">
+                                    <i class="bx bx-search fs-4 lh-0"></i>
+                                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                                           aria-label="Search..."/>
+                                </div>
+                            </div>
+                            <!-- /Search -->
+
+                            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                                <!-- Place this tag where you want the button to render. -->
+
+                                <!-- User -->
+                                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                       data-bs-toggle="dropdown">
+                                        <div class="avatar avatar-online">
+                                            <h:graphicImage styleClass="x-px-40 h-auto rounded-circle"
+                                                            name="img/avatars/1.png"/>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar avatar-online">
+                                                            <h:graphicImage styleClass="x-px-40 h-auto rounded-circle"
+                                                                            name="img/avatars/1.png"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="fw-semibold d-block">#{UserBean.username}</span>
+                                                        <small class="text-muted">#{UserBean.role}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="bx bx-user me-2"></i>
+                                                <span class="align-middle">Profile</span>
+                                            </a>
+                                            <h:commandLink styleClass="dropdown-item" action="#{LoginController.logout()}">
+                                                <i class="bx bx-power-off me-2"></i>
+                                                <span class="align-middle">Log Out</span>
+                                            </h:commandLink>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <!--/ User -->
+                            </ul>
+                        </div>
+                    </nav>
+                </h:form>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <ui:insert name="content"/>
+                <!-- Content wrapper -->
+            </h:panelGroup>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <h:outputScript name="vendor/libs/jquery/jquery.js"/>
+    <h:outputScript name="vendor/libs/popper/popper.js"/>
+    <h:outputScript name="vendor/js/bootstrap.js"/>
+    <h:outputScript name="vendor/libs/perfect-scrollbar/perfect-scrollbar.js"/>
+    <h:outputScript name="vendor/js/menu.js"/>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <h:outputScript name="js/main.js"/>
+
+    <!-- Page JS -->
+
+</h:body>
+</html>
