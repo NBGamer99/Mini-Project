@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+
+>
+<f:metadata>
+    <f:viewAction
+            action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+</f:metadata>
+
+<ui:composition template="../../template.xhtml">
+    <ui:define name="content">
+        <!-- Content wrapper -->
+        <h:panelGroup layout="block" styleClass="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Courses /</span>New Course</h4>
+
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h5 class="mb-0">Add Course</h5>
+                            <small class="text-muted float-end">Add course details</small>
+                        </div>
+                        <div class="card-body">
+                            <h:form>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="courseCode">Code</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-code"></i></span>
+                                            <h:inputText type="text" id="courseCode" name="courseCode"
+                                                         value="#{CourseBean.courseEntity.code}" class="form-control"
+                                                         a:placeholder="New Course Code"
+                                                         aria-label="New Course Code"
+                                                         required="true"
+                                                         requiredMessage="Course Code is required"
+                                            />
+                                        </div>
+                                        <h:message for="courseCode" style="color: red"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="courseName">Name</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-rename"></i></span>
+                                            <h:inputText type="text" id="courseName" name="courseName"
+                                                         value="#{CourseBean.courseEntity.name}" class="form-control"
+                                                         a:placeholder="New Course Name"
+                                                         aria-label="New Course Name"
+                                                         required="true"
+                                                         requiredMessage="Course Name is required"
+                                            />
+                                        </div>
+                                        <h:message for="courseName" style="color: red"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="courseMajor">Major</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bxs-graduation"></i></span>
+                                            <h:selectManyListbox id="courseMajor" value="#{CourseBean.selectedMajors}"
+                                                                 class="form-select" required="true" requiredMessage="Major is required">
+                                                <f:selectItems value="#{CourseBean.availableMajors}" var="major"
+                                                               itemValue="#{major}" itemLabel="#{major.label}"/>
+                                            </h:selectManyListbox>
+                                        </div>
+                                        <h:message for="courseMajor" style="color: red"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="courseSemester">Semester</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-calendar"></i></span>
+                                            <h:selectOneMenu id="courseSemester" value="#{CourseBean.selectedSemester}"
+                                                             class="form-select" required="true" requiredMessage="Semester Is Required">
+                                                <f:selectItem itemLabel="Select Semester" itemValue=""/>
+                                                <f:selectItems value="#{CourseBean.availableSemesters}" var="semester"
+                                                               itemValue="#{semester}" itemLabel="#{semester.label}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <h:message for="courseSemester" style="color: red"/>
+                                    </div>
+                                </div>
+
+                                <!-- Include other fields for updating -->
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-10">
+                                        <h:commandButton value="Add new Course"
+                                                         action="#{AdminAddCoursesController.addCourse()}"
+                                                         class="btn btn-primary"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5"/>
+
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <h:panelGroup layout="block" styleClass="content-footer footer bg-footer-theme">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        , made with ❤️ by @zakelfathi, @NBGamer99 and @ez7mz
+                    </div>
+
+                </div>
+            </h:panelGroup>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </h:panelGroup>
+        <!-- End Content wrapper -->
+    </ui:define>
+</ui:composition>
+</html>

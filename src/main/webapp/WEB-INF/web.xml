@@ -30,7 +30,7 @@
 
     <!-- index file -->
     <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
     <!-- skip comments in Facelets pages -->

@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import me.ynabouzi.miniproject.enums.Major;
 import me.ynabouzi.miniproject.enums.Semester;
-
-import java.util.Set;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import java.util.List;
 
 @Data
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "courses", schema = "MINI_PROJET")
@@ -22,15 +22,43 @@ public class CourseEntity {
 	@Enumerated(EnumType.STRING)
 	private Semester semester;
 
-	@ElementCollection(targetClass = Major.class)
 	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Major.class, fetch = FetchType.LAZY)
 	@CollectionTable(name = "course_major", joinColumns = @JoinColumn(name = "course_id"))
-	@Column(name = "major")
-	private Set<Major> majors;
+	private List<Major> majors;
 
-	@OneToMany(mappedBy = "course_student", cascade = CascadeType.ALL)
-	private Set<StudentEntity> students;
+	@ManyToMany(mappedBy = "course_student", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	private List<StudentEntity> students;
 
-	@OneToMany(mappedBy = "course_parent", cascade = CascadeType.ALL)
-	private Set<CourseItemEntity> courseItems;
+	@OneToMany(mappedBy = "course", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<CourseItemEntity> courseItems;
+
+	public String getCoursesItems() {
+		StringBuilder result = new StringBuilder("[");
+		if (courseItems == null || courseItems.isEmpty()) {
+			return result.append("]").toString();
+		}
+		for (CourseItemEntity courseItem : courseItems) {
+			if (result.length() > 1) {
+				result.append(", ");
+			}
+			result.append(courseItem.getName());
+		}
+		result.append("]");
+		return result.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "CourseEntity{" +
+				"id=" + id +
+				", code='" + code + '\'' +
+				", name='" + name + '\'' +
+				", semester=" + semester +
+				", majors=" + majors +
+//				", students=" + students +
+				", courseItems=" + courseItems +
+				'}';
+	}
 }

@@ -2,10 +2,6 @@ package me.ynabouzi.miniproject.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
@@ -62,7 +58,9 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	public boolean deleteCourse(Long id) {
 		CourseEntity course = entityManager.find(CourseEntity.class, id);
 		if (course != null) {
+			entityManager.getTransaction().begin();
 			entityManager.remove(course);
+			entityManager.getTransaction().commit();
 			return true;
 		}
 		return false;
