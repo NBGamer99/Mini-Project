@@ -9,8 +9,10 @@
 
 >
 <f:metadata>
+    <f:viewAction action="#{CourseItemBean.changeValues()}"/>
     <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
 </f:metadata>
+
 
 <ui:composition template="../../template.xhtml">
     <ui:define name="content">
@@ -87,7 +89,7 @@
                                                                 required="true"
                                                                 requiredMessage="Please select a professor for the course item"
                                             >
-                                                <f:selectItem itemLabel="Select Professor" itemValue="#{CourseItemBean.changeValues()}" />
+                                                <f:selectItem itemLabel="Select Professor" itemValue="" />
                                                 <f:selectItems value="#{CourseItemBean.availableProfessors}" var="professor" itemValue="#{professor.id}" itemLabel="#{professor.FullNameTitle()}" />
                                             </h:selectOneMenu>
                                         </div>
