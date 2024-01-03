@@ -4,8 +4,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <title>403 - ACCESS DENIED</title>
+    <h:outputStylesheet library="css" name="error.css"/>
+</h:head>
 <f:view>
-    <h:outputLabel value="Hello, world"/>
+    <div class="text-wrapper">
+        <div class="title">
+            403 - ACCESS DENIED
+        </div>
+
+        <div class="subtitle">
+            Oops, You don't have permission to access this page.
+        </div>
+        <div class="isi">
+
+        </div>
+
+        <div class="buttons">
+            <a class="button" href="#{request.contextPath}">Go to homepage</a>
+        </div>
+    </div>
 </f:view>
 </html>

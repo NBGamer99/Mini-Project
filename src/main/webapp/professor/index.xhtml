@@ -112,9 +112,30 @@
                                                     <div class="col-sm-10">
                                                         <h:commandButton value="Validate"
                                                                          class="btn btn-success"
-                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"/>
+                                                                         onclick="validateAndSubmit()"
+                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                        />
                                                     </div>
                                                 </div>
+                                                <div class="float-end m-2">
+                                                    <div class="col-sm-10">
+                                                        <h:commandButton value="Course Average Grade"
+                                                                         class="btn btn-secondary"
+                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                                         disabled="#{not ProfessorUserBean.selectedCourseItem.validated}"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="float-end m-2">
+                                                    <div class="col-sm-10">
+                                                        <h:commandButton value="Course Item Average Grade"
+                                                                         class="btn btn-info"
+                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                                         disabled="#{not ProfessorUserBean.selectedCourseItem.validated}"
+                                                        />
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -128,7 +149,6 @@
                                                     <td class="text-center">
                                                         <strong>#{student.FullName()}</strong>
                                                     </td>
-
                                                     <td>
                                                         Absent ?
                                                         <h:selectBooleanCheckbox
@@ -349,6 +369,29 @@
     </div>
     <!-- / Layout wrapper -->
 
+    <script >
+        function validateAndSubmit() {
+            var inputs = document.querySelectorAll('input[type="text"]');
+            var shouldSubmit = true;
+            var found = false;
+
+            inputs.forEach(function(input) {
+                var value = parseFloat(input.value);
+                if (value === 0 || value === 20) {
+                    found = true;
+                    return;
+                }
+            });
+
+
+            if (found) {
+                shouldSubmit = confirm('One of the values you entered have 0 or 20, are you sure you want to continue ?');
+            }
+            if (shouldSubmit) {
+                document.getElementById('first').submit(); // Submit the form if validation passes
+            }
+        }
+    </script>
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <h:outputScript name="vendor/libs/jquery/jquery.js"/>
