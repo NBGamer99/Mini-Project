@@ -1,4 +1,4 @@
-package me.ynabouzi.miniproject.bean;
+package me.ynabouzi.miniproject.bean.admin;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -52,9 +52,14 @@ public class EvaluationsBean implements Serializable {
 			selectedCourseItemId = null;
 	}
 
-	public void getEvaluations() {
+	public List<EvaluationEntity> getEvaluations() {
+		List<EvaluationEntity> localEvaluations = null;
 		if (selectedCourseItemId != null)
-			setCreatedEvaluations(courseItemService.getCourseItemById(selectedCourseItemId).getEvaluations());
+		{
+			localEvaluations = courseItemService.getCourseItemById(selectedCourseItemId).getEvaluations();
+			setCreatedEvaluations(localEvaluations);
+		}
+		return localEvaluations;
 	}
 
 

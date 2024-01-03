@@ -59,7 +59,9 @@
                                                          required="true"
                                                          converterMessage="Only numbers are allowed"
                                                          requiredMessage="Please enter a coefficient for the course item"
-                                            />
+                                            >
+                                                <f:validateLongRange minimum="0" maximum="1" />
+                                            </h:inputText>
                                         </div>
                                         <h:message for="courseItemCoefficient" style="color: #ec5f54" />
                                     </div>

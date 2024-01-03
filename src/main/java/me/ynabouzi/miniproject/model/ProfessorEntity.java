@@ -1,12 +1,13 @@
 package me.ynabouzi.miniproject.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
+
 import java.util.List;
 
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "professors", schema = "MINI_PROJET")
 public class ProfessorEntity {

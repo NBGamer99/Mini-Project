@@ -6,7 +6,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.bean.UserBean;
+import me.ynabouzi.miniproject.bean.admin.UserBean;
 import me.ynabouzi.miniproject.controllers.error.ErrorMessageController;
 import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
 import me.ynabouzi.miniproject.enums.Users;
@@ -42,8 +42,9 @@ public class LoginController implements Serializable {
 			}
 			else if (dbUser.getRole().equals(Users.PROFESSOR))
 			{
+				System.out.println("I did work and enter");
 				userBean.setRole(Users.PROFESSOR);
-				return "welcome?faces-redirect=true";
+				return "/professor/index?faces-redirect=true";
 			}
 		} else {
 			errorMessageController.setErrorMessage("Invalid username or password");
@@ -60,18 +61,27 @@ public class LoginController implements Serializable {
 	}
 
 	public String redirectToLoginIfNotLoggedIn(String currentPage) {
-		System.out.println("Current Page: " + currentPage+ " " + "/index.xhtml".equals(currentPage) + " userBean.isLoggedIn(): " + userBean.isLoggedIn());
+		System.out.println("Current Page: " + currentPage+ " " + "/index.xhtml".equals(currentPage) + " userBean.isLoggedIn(): " + userBean.isLoggedIn() + "User role " + userBean.getRole());
+
 		if (!userBean.isLoggedIn() && !"/index.xhtml".equals(currentPage)) {
-			return "/index.xhtml?faces-redirect=true";
+			return "/index.xhtml?faces-redirect=true"; // Redirect to login if not logged in
 		} else if (userBean.isLoggedIn()) {
 			if ("/index.xhtml".equals(currentPage)) {
+				// Redirect to respective dashboards based on user role
 				if (userBean.getRole().equals(Users.ADMIN)) {
-					return "admin/index.xhtml?faces-redirect=true";
+					return "/admin/index.xhtml?faces-redirect=true";
 				} else if (userBean.getRole().equals(Users.PROFESSOR)) {
-					return "welcome?faces-redirect=true";
+					return "/professor/index.xhtml?faces-redirect=true";
 				}
+			} else if (currentPage.startsWith("/admin/") && !userBean.getRole().equals(Users.ADMIN)) {
+				// Prevent access to admin pages for non-admin users
+				return "/error.xhtml?faces-redirect=true"; // Redirect to an error page or handle differently
+			} else if (currentPage.startsWith("/professor/") && !userBean.getRole().equals(Users.PROFESSOR)) {
+				// Prevent access to professor pages for non-professor users
+				return "/error.xhtml?faces-redirect=true"; // Redirect to an error page or handle differently
 			}
 		}
 		return null;
 	}
+
 }

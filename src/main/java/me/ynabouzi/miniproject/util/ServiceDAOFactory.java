@@ -4,19 +4,22 @@ import me.ynabouzi.miniproject.dao.*;
 
 public class ServiceDAOFactory {
 
+	protected static CourseItemEntityDAOImpl courseItemService;
 	protected static EvaluationEntityDAOImpl evaluationService;
 	protected static CourseEntityDAOImpl courseService;
-
-	protected static CourseItemEntityDAOImpl courseItemService;
-
 	protected static ProfessorEntityDAOImpl professorService;
-
 	protected static StudentEntityDAOImpl studentService;
-
 	protected static UserEntityDAOImpl userService;
+	protected static NoteEntityDAOImpl noteService;
 
+	public static NoteEntityDAOImpl getNoteService() {
+		if (noteService == null) {
+			noteService = new NoteEntityDAOImpl();
+		}
+		return noteService;
+	}
 
-public static EvaluationEntityDAOImpl getEvaluationService() {
+	public static EvaluationEntityDAOImpl getEvaluationService() {
 		if (evaluationService == null) {
 			evaluationService = new EvaluationEntityDAOImpl();
 		}

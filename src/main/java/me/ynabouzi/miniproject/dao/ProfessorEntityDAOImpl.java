@@ -41,6 +41,19 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
+	public ProfessorEntity getProfessorByUserID(Long id) {
+		ProfessorEntity professor = null;
+		try {
+			professor = entityManager.createQuery("SELECT p FROM ProfessorEntity p WHERE p.user_professor.id = :id", ProfessorEntity.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return professor;
+	}
+
+	@Override
 	public ProfessorEntity getProfessorByLastName(String name) {
 		ProfessorEntity professor = null;
 		try {

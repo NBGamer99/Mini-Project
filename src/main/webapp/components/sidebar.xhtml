@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:panelGroup layout="block" id="layout-menu" styleClass="layout-menu menu-vertical menu bg-menu-theme">
+        <div class="app-brand demo">
+            <a href="#" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <!-- Your SVG content here -->
+            </span>
+                <span class="app-brand-text demo menu-text fw-bolder ms-2">PROF SPACE</span>
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+        </div>
+
+        <div class="menu-inner-shadow"></div>
+
+        <ul class="menu-inner py-1">
+            <!-- Layouts -->
+            <li class="menu-item">
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Course Items</span>
+                </li>
+                <ui:repeat value="#{ProfessorUserBean.professorCourseItemsList}" var="courseItem">
+                    <li class="menu-item">
+                        <h:form>
+<!--                            <h:commandLink value="#{courseItem.name}"-->
+<!--                                           action="#{ProfessorCourseItemsNotesController.createStudentNotes()}"-->
+<!--                                           styleClass="menu-link gap-2">-->
+<!--                                &lt;!&ndash;                                <div data-i18n="Without menu"></div>&ndash;&gt;-->
+<!--                                <f:actionListener binding="#{ProfessorUserBean.selectCourseItem(courseItem)}"/>-->
+
+<!--                                <span class="badge bg-label-primary me-1 ">#{courseItem.validated}</span>-->
+<!--                            </h:commandLink>-->
+                            <h:commandLink value="#{courseItem.name}"
+                                           action="#{ProfessorCourseItemsNotesController.createStudentNotes()}"
+                                           styleClass="menu-link gap-2"
+                            >
+                                <!--                                           style="#{courseItem.validated ? 'pointer-events: none;' : ''}"-->
+                                <f:actionListener binding="#{ProfessorUserBean.selectCourseItem(courseItem)}"/>
+
+                                <span class="badge bg-label-#{courseItem.validated ? 'primary' : 'danger'} me-1">#{courseItem.validated ? 'Validated' : 'Not Validated'}</span>
+                            </h:commandLink>
+
+
+                        </h:form>
+                    </li>
+                </ui:repeat>
+                <!--                    <h:outputText value="#{ProfessorUserBean.selectedCourseItem}" />-->
+            </li>
+        </ul>
+    </h:panelGroup>
+    <!-- / Menu -->
+
+
+</ui:composition>

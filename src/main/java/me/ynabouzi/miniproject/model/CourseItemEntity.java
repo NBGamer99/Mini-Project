@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "course_items", schema = "MINI_PROJET")
 public class CourseItemEntity {
@@ -13,6 +14,7 @@ public class CourseItemEntity {
 	private Long id;
 	private String name;
 	private Double coefficient;
+	private boolean validated;
 
 	@ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")

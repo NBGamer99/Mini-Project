@@ -6,11 +6,14 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.bean.StudentBean;
+import me.ynabouzi.miniproject.bean.admin.StudentBean;
+import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.StudentEntity;
 import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.dao.StudentEntityDAOImpl;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,15 +24,29 @@ public class AddStudentController {
 
 	private static StudentEntityDAOImpl studentService = ServiceDAOFactory.getStudentService();
 
+	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
+
 	@Inject
 	private StudentBean studentBean;
 
+
 public String addStudent() {
-		StudentEntity studentEntity = studentBean.getStudentEntity();
-		studentEntity.setCourse_student(studentBean.getSelectedCourses());
-		studentService.saveStudent(studentBean.getStudentEntity());
-		studentBean.init();
-		return "/admin/student/students-list.xhtml?faces-redirect=true";
+	StudentEntity studentEntity = studentBean.getStudentEntity();
+
+	for (CourseEntity course : studentBean.getSelectedCourses()) {
+//		course.setStudents(studentEntity);
+		if (course.getStudents() != null)
+			course.getStudents().add(studentEntity);
+		else
+			course.setStudents(List.of(studentEntity));
+
+		courseService.updateCourse(course, course.getId());
+	}
+	studentEntity.setCourse_student(studentBean.getSelectedCourses());
+	studentService.saveStudent(studentBean.getStudentEntity());
+
+	studentBean.init();
+	return "/admin/student/students-list.xhtml?faces-redirect=true";
 	}
 
 

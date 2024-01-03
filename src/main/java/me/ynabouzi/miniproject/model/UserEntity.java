@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import me.ynabouzi.miniproject.enums.Users;
 
-@Data
+
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "users", schema = "MINI_PROJET")

@@ -105,9 +105,11 @@
                                                                  label="Coefficient"
                                                                  converterMessage="Coefficient must be a number"
                                                         requiredMessage="Coefficient is required"
-                                                    />
+                                                    >
+                                                        <f:validateLongRange minimum="0" maximum="1" />
+                                                    </h:inputText>
                                                     <h:message for="coefficient" styleClass="text-danger"/>
-
+                                                    <h:messages id="validationMessages" globalOnly="true" style="color: red;" />
                                                 </td>
                                             </tr>
                                         </ui:repeat>

@@ -5,8 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
-@Data
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "evaluations", schema = "MINI_PROJET")

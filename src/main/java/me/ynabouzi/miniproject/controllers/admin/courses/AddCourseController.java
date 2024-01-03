@@ -6,7 +6,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.bean.CourseBean;
+import me.ynabouzi.miniproject.bean.admin.CourseBean;
 import me.ynabouzi.miniproject.util.ServiceDAOFactory;
 import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
 

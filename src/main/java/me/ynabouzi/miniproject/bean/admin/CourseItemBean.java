@@ -1,4 +1,4 @@
-package me.ynabouzi.miniproject.bean;
+package me.ynabouzi.miniproject.bean.admin;
 
 
 import jakarta.annotation.PostConstruct;

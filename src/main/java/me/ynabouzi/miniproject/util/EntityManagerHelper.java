@@ -24,7 +24,8 @@ public class EntityManagerHelper {
 					"me.ynabouzi.miniproject.model.CourseEntity",
 					"me.ynabouzi.miniproject.model.EvaluationEntity",
 					"me.ynabouzi.miniproject.model.ProfessorEntity",
-					"me.ynabouzi.miniproject.model.UserEntity"))
+					"me.ynabouzi.miniproject.model.UserEntity",
+					"me.ynabouzi.miniproject.model.NoteEntity"))
 			.build();
 
 	private static EntityManagerFactory emf = new HibernatePersistenceProvider()

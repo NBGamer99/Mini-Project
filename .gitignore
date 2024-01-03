@@ -44,3 +44,4 @@ build/
 /src/main/webapp/views/index.xhtml
 /src/main/webapp/views/login.xhtml
 /src/main/webapp/views/register.xhtml
+/src/main/java/me/ynabouzi/miniproject/Main.java

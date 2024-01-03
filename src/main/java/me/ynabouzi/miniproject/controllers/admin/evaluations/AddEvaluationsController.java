@@ -7,7 +7,7 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.bean.EvaluationsBean;
+import me.ynabouzi.miniproject.bean.admin.EvaluationsBean;
 import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
 import me.ynabouzi.miniproject.dao.EvaluationEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseItemEntity;

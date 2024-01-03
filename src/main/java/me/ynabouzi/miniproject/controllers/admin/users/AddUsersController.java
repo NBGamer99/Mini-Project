@@ -52,16 +52,17 @@ public class AddUsersController implements Serializable {
 
 	public String addUser() {
 		userEntity.setRole(selectedUser);
+
 		String  hashedPassword = PasswordHasher.hashPassword(userEntity.getPassword());
 		userEntity.setPassword(hashedPassword);
+		userService.saveUser(userEntity);
 
 		if (selectedUser == Users.PROFESSOR) {
 			professorEntity = professorService.getProfessorById(selectedProfessorId);
-			professorEntity.setUser_professor(userEntity);
+			professorEntity.setUser_professor(userService.getUserByUsername(userEntity.getUsername()));
 			professorService.updateProfessor(professorEntity, selectedProfessorId);
 		}
 
-		userService.saveUser(userEntity);
 		setUserEntity(new UserEntity());
 		return "/admin/manage-user/users-list?faces-redirect=true";
 	}

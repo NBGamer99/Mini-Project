@@ -6,7 +6,9 @@ import lombok.*;
 
 import java.util.List;
 
-@Data
+
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "students", schema = "MINI_PROJET")
@@ -22,5 +24,10 @@ public class StudentEntity {
 
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private List<CourseEntity> course_student;
+
+	public String FullName()
+	{
+		return this.firstName + " " + this.lastName;
+	}
 
 }
