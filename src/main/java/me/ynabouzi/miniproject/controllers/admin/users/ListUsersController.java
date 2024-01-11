@@ -6,8 +6,8 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
+import me.ynabouzi.miniproject.dao.DAOImpl.UserEntityDAOImpl;
 import me.ynabouzi.miniproject.model.UserEntity;
 
 import java.io.Serializable;
@@ -30,15 +30,14 @@ public class ListUsersController implements Serializable {
 	}
 
 	public List<UserEntity> fetchUsersFromBackend() {
-		users = userService.getAllUsers();
+		users = userService.getAllEntities();
 		return users;
 	}
 
 	public void deleteUser(Long id) {
-		if (userService.deleteUser(id)) {
+		UserEntity user = userService.getEntityById(id);
+		if (userService.deleteEntity(id)) {
 			this.init();
 		}
 	}
-
-
 }

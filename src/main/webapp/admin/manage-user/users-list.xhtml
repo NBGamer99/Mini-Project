@@ -9,7 +9,7 @@
 
 
 <f:metadata>
-    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+    <f:viewAction action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
 </f:metadata>
 
 <ui:composition template="../../template.xhtml">

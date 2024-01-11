@@ -5,10 +5,10 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
+import me.ynabouzi.miniproject.dao.DAOImpl.UserEntityDAOImpl;
 import me.ynabouzi.miniproject.enums.Users;
 import me.ynabouzi.miniproject.model.UserEntity;
 import me.ynabouzi.miniproject.util.PasswordHasher;
@@ -41,13 +41,13 @@ public class AddUsersController implements Serializable {
 
 	public AddUsersController() {
 		userEntity = new UserEntity();
-		availableProfessors = professorService.getAllProfessors();
+		availableProfessors = professorService.getAllEntities();
 		availableUsers = List.of(Users.values());
 	}
 
 	public void changeValues()
 	{
-		setAvailableProfessors(professorService.getAllProfessors());
+		setAvailableProfessors(professorService.getAllEntities());
 	}
 
 	public String addUser() {
@@ -55,12 +55,12 @@ public class AddUsersController implements Serializable {
 
 		String  hashedPassword = PasswordHasher.hashPassword(userEntity.getPassword());
 		userEntity.setPassword(hashedPassword);
-		userService.saveUser(userEntity);
+		userService.saveEntity(userEntity);
 
 		if (selectedUser == Users.PROFESSOR) {
-			professorEntity = professorService.getProfessorById(selectedProfessorId);
+			professorEntity = professorService.getEntityById(selectedProfessorId);
 			professorEntity.setUser_professor(userService.getUserByUsername(userEntity.getUsername()));
-			professorService.updateProfessor(professorEntity, selectedProfessorId);
+			professorService.updateEntity(professorEntity, selectedProfessorId);
 		}
 
 		setUserEntity(new UserEntity());

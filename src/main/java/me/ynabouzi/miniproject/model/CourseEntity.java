@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import me.ynabouzi.miniproject.enums.Major;
 import me.ynabouzi.miniproject.enums.Semester;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
 
 @Getter
@@ -56,8 +54,6 @@ public class CourseEntity {
 				", name='" + name + '\'' +
 				", semester=" + semester +
 				", majors=" + majors +
-//				", students=" + students +
-//				", courseItems=" + courseItems +
 				'}';
 	}
 }

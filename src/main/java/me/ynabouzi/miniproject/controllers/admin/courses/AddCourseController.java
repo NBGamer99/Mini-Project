@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.CourseBean;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseEntityDAOImpl;
 
 import java.io.Serializable;
 
@@ -34,7 +34,7 @@ public class AddCourseController implements Serializable {
 	public String addCourse()
 	{
 		this.courseSetter();
-		courseService.saveCourse(courseBean.getCourseEntity());
+		courseService.saveEntity(courseBean.getCourseEntity());
 		courseBean.init();
 		return "/admin/index.xhtml?faces-redirect=true";
 	}

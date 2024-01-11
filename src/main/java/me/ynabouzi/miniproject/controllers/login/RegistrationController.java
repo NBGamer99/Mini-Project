@@ -7,8 +7,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.controllers.error.ErrorMessageController;
-import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.UserEntityDAOImpl;
 import me.ynabouzi.miniproject.enums.Users;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 import me.ynabouzi.miniproject.model.UserEntity;
 import me.ynabouzi.miniproject.util.PasswordHasher;
 
@@ -22,7 +23,7 @@ public class RegistrationController {
 	@Inject
 	private ErrorMessageController errorMessageController;
 
-	private static UserEntityDAOImpl userService = new UserEntityDAOImpl();
+	private static UserEntityDAOImpl userService = ServiceDAOFactory.getUserService();
 	private String username;
 	private String password;
 	private String confirmPassword;
@@ -59,7 +60,7 @@ public class RegistrationController {
 		user.setPassword(PasswordHasher.hashPassword(password));
 		user.setRole(Users.ADMIN);
 
-		userService.saveUser(user);
+		userService.saveEntity(user);
 		errorMessageController.setErrorMessage("Registration Successful");
 
 		return "index?faces-redirect=true";

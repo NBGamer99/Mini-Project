@@ -8,7 +8,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 
 <f:metadata>
-    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+    <f:viewAction action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
 </f:metadata>
 
 <ui:composition template="../../template.xhtml">
@@ -42,7 +42,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core"
                             <ui:repeat value="#{AdminListStudentsController.students}" var="student">
                                 <tr class="text-center">
                                     <td>#{student.id}</td>
-                                    <td>#{student.studentCode}</td>
+                                    <td>#{student.code}</td>
                                     <td>#{student.firstName}</td>
                                     <td>#{student.lastName}</td>
                                     <td>

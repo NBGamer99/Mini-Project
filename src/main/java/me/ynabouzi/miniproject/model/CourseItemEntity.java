@@ -1,7 +1,11 @@
 package me.ynabouzi.miniproject.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.util.List;
 
 @Getter
@@ -20,11 +24,11 @@ public class CourseItemEntity {
 	@JoinColumn(name = "course_id")
 	private CourseEntity course;
 
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "professor_id")
 	private ProfessorEntity professor;
 
-	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.DETACH , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "courseItem", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
 	private List<EvaluationEntity> evaluations;
 
 	@Override
@@ -33,9 +37,6 @@ public class CourseItemEntity {
 				"id=" + id +
 				", name='" + name + '\'' +
 				", coefficient=" + coefficient +
-//				", course_parent=" + course +
-//				", professor_item=" + professor +
-//				", evaluations=" + evaluations +
 				'}';
 	}
 }

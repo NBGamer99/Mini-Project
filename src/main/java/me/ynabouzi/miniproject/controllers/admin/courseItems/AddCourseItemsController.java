@@ -8,12 +8,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.CourseItemBean;
-import me.ynabouzi.miniproject.model.CourseItemEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 import me.ynabouzi.miniproject.model.CourseEntity;
+import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
 
 import java.io.Serializable;
@@ -35,8 +35,8 @@ public class AddCourseItemsController implements Serializable {
 	private CourseItemBean courseItemBean;
 
 	public String addCourseItem() {
-		ProfessorEntity professorEntity = professorService.getProfessorById(courseItemBean.getSelectedProfessor());
-		CourseEntity courseEntity = courseService.getCourseById(courseItemBean.getSelectedCourse());
+		ProfessorEntity professorEntity = professorService.getEntityById(courseItemBean.getSelectedProfessor());
+		CourseEntity courseEntity = courseService.getEntityById(courseItemBean.getSelectedCourse());
 		CourseItemEntity courseItem = courseItemBean.getCourseItemEntity();
 
 		courseItem.setProfessor(professorEntity);
@@ -49,9 +49,11 @@ public class AddCourseItemsController implements Serializable {
 
 		courseEntity.setCourseItems(listOfAllCourseItems);
 
-		courseItemService.saveCourseItem(courseItem);
+		courseItemService.saveEntity(courseItem);
 
 		courseItemBean.init();
 		return "/admin/course-items/course-item-list.xhtml?faces-redirect=true";
 	}
+
+
 }

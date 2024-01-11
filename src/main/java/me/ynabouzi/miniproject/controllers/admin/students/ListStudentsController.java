@@ -6,8 +6,9 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.StudentEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
+import me.ynabouzi.miniproject.dao.DAOImpl.StudentEntityDAOImpl;
+import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.StudentEntity;
 
 import java.io.Serializable;
@@ -30,15 +31,22 @@ public class ListStudentsController implements Serializable
 	}
 
 	private List<StudentEntity> fetchStudentsFromBackend() {
-		students = studentService.getAllStudents();
+		students = studentService.getAllEntities();
 		return students;
 	}
 
 	public void deleteStudent(Long id) {
-		if (studentService.deleteStudent(id))
+		StudentEntity student = studentService.getEntityById(id);
+		unsetAttributes(student);
+		if (studentService.deleteEntity(id))
 		{
 			this.init();
 		}
+	}
+
+	private void unsetAttributes(StudentEntity student) {
+		if (student.getCourse_student() != null)
+			student.getCourse_student().forEach(course -> course.getStudents().remove(student));
 	}
 
 }

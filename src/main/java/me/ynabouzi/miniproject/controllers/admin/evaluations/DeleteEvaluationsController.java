@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.EvaluationsBean;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.EvaluationEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.EvaluationEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.EvaluationEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
 
@@ -32,16 +32,16 @@ public class DeleteEvaluationsController implements Serializable {
 
 	public void deleteAllEvaluations() {
 		Long courseItemId = evaluationsBean.getSelectedCourseItemId();
-		CourseItemEntity courseItem = courseItemService.getCourseItemById(courseItemId);
+		CourseItemEntity courseItem = courseItemService.getEntityById(courseItemId);
 
 		if (evaluationsBean.getCreatedEvaluations() != null && !evaluationsBean.getCreatedEvaluations().isEmpty())
 		{
 			courseItem.setEvaluations(null);
 			for (EvaluationEntity evaluation : evaluationsBean.getCreatedEvaluations()) {
 				evaluation.setCourseItem(null);
-				evaluationService.deleteEvaluationEntity(evaluation.getId());
+				evaluationService.deleteEntity(evaluation.getId());
 			}
-			courseItemService.updateCourseItem(courseItem, courseItemId);
+			courseItemService.updateEntity(courseItem, courseItemId);
 			evaluationsBean.setIsCreated(false);
 		}
 		evaluationsBean.getEvaluations();

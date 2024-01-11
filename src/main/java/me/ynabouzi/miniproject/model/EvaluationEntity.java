@@ -1,9 +1,17 @@
 package me.ynabouzi.miniproject.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 
 @Getter
 @Setter
@@ -17,6 +25,6 @@ public class EvaluationEntity {
 	private String type;
 	private Double coefficient;
 
-	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private CourseItemEntity courseItem;
 }

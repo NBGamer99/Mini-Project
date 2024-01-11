@@ -9,7 +9,7 @@
 
 
 <f:metadata>
-    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+    <f:viewAction action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
 </f:metadata>
 
 <ui:composition template="../template.xhtml">
@@ -54,7 +54,7 @@
                                     <td style="text-align: center">#{course.coursesItems}</td>
                                     <td style="text-align: center">
                                         <h:form>
-                                            <h:commandLink value="Edit" styleClass="btn-primary btn pt-1 pb-1 py-2 me-2" action="#{AdminUpdateCoursesController.redirectToEditPage(course)}" >
+                                            <h:commandLink value="Edit" styleClass="btn-primary btn pt-1 pb-1 py-2 me-2" >
                                                 <i class="bx bx-edit-alt"></i>
                                             </h:commandLink>
                                             <h:commandLink styleClass="btn-danger btn pt-1 pb-1 py-2" value="Delete" action="#{AdminListCoursesController.deleteCourse(course.id)}" >

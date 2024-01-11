@@ -11,7 +11,7 @@
 
 <f:metadata>
     <f:viewAction action="#{StudentBean.changeValues()}"/>
-    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
+    <f:viewAction action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}" />
 </f:metadata>
 
 <ui:composition template="../../template.xhtml">
@@ -70,7 +70,7 @@
                                         <div class="input-group input-group-merge">
                                             <span class="input-group-text"><i class="bx bx-category"></i></span>
                                             <h:inputText type="text" id="studentCode" name="studentCode"
-                                                         value="#{StudentBean.studentEntity.studentCode}" class="form-control"
+                                                         value="#{StudentBean.studentEntity.code}" class="form-control"
                                                          a:placeholder="New Student Code"
                                                          aria-label="New Student Code"
                                                             required="true"

@@ -1,4 +1,4 @@
-package me.ynabouzi.miniproject.bean.admin;
+package me.ynabouzi.miniproject.bean.login;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;

@@ -10,13 +10,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.EvaluationsBean;
-import me.ynabouzi.miniproject.dao.EvaluationEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.EvaluationEntityDAOImpl;
 import me.ynabouzi.miniproject.model.EvaluationEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
-import jakarta.faces.application.FacesMessage;
+
 import me.ynabouzi.miniproject.validator.CoefficientSumValidator;
 
 
@@ -41,9 +42,13 @@ public class SaveEvaluationsController implements Serializable {
 
 		try {
 			coefficientSumValidator.validate(evaluationsBean);
-			for (EvaluationEntity evaluation : evaluationsBean.getCreatedEvaluations()) {
-				evaluationService.updateEvaluationEntity(evaluation, evaluation.getId());
-				System.out.println("Coeffecient is :" + evaluation.getCoefficient());
+			List<EvaluationEntity> evaluations = evaluationsBean.getCreatedEvaluations();
+			System.out.println("Evaluations re :" + evaluations);
+			for (int i = 0; i < evaluations.size(); i++) {
+				System.out.println("Evaluations before is :" + evaluations);
+				evaluationService.updateEntity(evaluations.get(i), evaluations.get(i).getId());
+				System.out.println("Evaluations after is :" + evaluations);
+//				System.out.println("Coeffecient is :" + evaluation.g.getCoefficient());
 			}
 			return "#";
 		}catch (ValidatorException e) {

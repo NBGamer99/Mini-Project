@@ -1,13 +1,14 @@
-package me.ynabouzi.miniproject.dao;
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.UserEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
-public class UserEntityDAOImpl implements UserEntityDAO{
+public class UserEntityDAOImpl implements EntityDAO<UserEntity> {
 
 	@PersistenceContext
 	private static EntityManager entityManager;
@@ -17,7 +18,7 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 	}
 
 	@Override
-	public UserEntity getUserById(Long id) {
+	public UserEntity getEntityById(Long id) {
 		UserEntity user = null;
 		try {
 			user = entityManager.find(UserEntity.class, id);
@@ -27,13 +28,10 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 		return user;
 	}
 
-	@Override
 	public UserEntity getUserByUsername(String username) {
 		UserEntity user = null;
 		try {
-			user = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class)
-					.setParameter("username", username)
-					.getSingleResult();
+			user = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username = :username", UserEntity.class).setParameter("username", username).getSingleResult();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -41,7 +39,7 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 	}
 
 	@Override
-	public List<UserEntity> getAllUsers() {
+	public List<UserEntity> getAllEntities() {
 		List<UserEntity> userEntities = null;
 		try {
 			userEntities = entityManager.createQuery("SELECT u FROM UserEntity u", UserEntity.class).getResultList();
@@ -52,7 +50,7 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 	}
 
 	@Override
-	public UserEntity saveUser(UserEntity user) {
+	public UserEntity saveEntity(UserEntity user) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(user);
@@ -65,25 +63,25 @@ public class UserEntityDAOImpl implements UserEntityDAO{
 	}
 
 	@Override
-	public boolean deleteUser(Long id) {
-		UserEntity user = this.getUserById(id);
+	public boolean deleteEntity(Long id) {
+		UserEntity user = this.getEntityById(id);
 		try {
-			if(user != null) {
+			if (user != null) {
 				entityManager.getTransaction().begin();
 				entityManager.remove(user);
 				entityManager.getTransaction().commit();
 				return true;
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return false;
 	}
 
 	@Override
-	public UserEntity updateUser(UserEntity user, Long id) {
+	public UserEntity updateEntity(UserEntity user, Long id) {
 		user.setId(id);
-		this.saveUser(user);
+		this.saveEntity(user);
 		return user;
 	}
 }

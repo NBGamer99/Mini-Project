@@ -1,14 +1,14 @@
-package me.ynabouzi.miniproject.dao;
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import me.ynabouzi.miniproject.model.CourseItemEntity;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.EvaluationEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
-public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
+public class EvaluationEntityDAOImpl implements EntityDAO<EvaluationEntity> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -18,7 +18,7 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 	}
 
 	@Override
-	public EvaluationEntity saveEvaluationEntity(EvaluationEntity evaluationEntity) {
+	public EvaluationEntity saveEntity(EvaluationEntity evaluationEntity) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(evaluationEntity);
@@ -29,8 +29,9 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 		}
 		return evaluationEntity;
 	}
+
 	@Override
-	public EvaluationEntity getEvaluationEntityById(Long id) {
+	public EvaluationEntity getEntityById(Long id) {
 		EvaluationEntity evaluationEntity = null;
 		try {
 			evaluationEntity = entityManager.find(EvaluationEntity.class, id);
@@ -40,25 +41,34 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 		return evaluationEntity;
 	}
 
-	@Override
-	public List<EvaluationEntity> getEvaluationEntityByCourseItem(CourseItemEntity courseItem) {
+	public List<EvaluationEntity> getAllEvaluationsByCourseItem(Long courseItemId) {
 		List<EvaluationEntity> evaluationEntities = null;
-		try
-		{
-			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseItem = :courseItem", EvaluationEntity.class)
-					.setParameter("courseItem", courseItem)
-					.getResultList();}
-		catch (Exception e)
-		{
+		try {
+			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e WHERE e.courseItem.id = :courseItemId", EvaluationEntity.class)
+					.setParameter("courseItemId", courseItemId)
+					.getResultList();
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return evaluationEntities;
 	}
 
 	@Override
-	public boolean deleteEvaluationEntity(Long id) {
+	public List<EvaluationEntity> getAllEntities() {
+		List<EvaluationEntity> evaluationEntities = null;
+		try {
+			evaluationEntities = entityManager.createQuery("SELECT e FROM EvaluationEntity e", EvaluationEntity.class)
+					.getResultList();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return evaluationEntities;
+	}
+
+	@Override
+	public boolean deleteEntity(Long id) {
 		EvaluationEntity evaluationEntity = entityManager.find(EvaluationEntity.class, id);
-		if(evaluationEntity != null) {
+		if (evaluationEntity != null) {
 			entityManager.getTransaction().begin();
 			entityManager.remove(evaluationEntity);
 			entityManager.getTransaction().commit();
@@ -68,9 +78,9 @@ public class EvaluationEntityDAOImpl implements EvaluationEntityDAO{
 	}
 
 	@Override
-	public EvaluationEntity updateEvaluationEntity(EvaluationEntity newEvaluationEntity, Long id) {
+	public EvaluationEntity updateEntity(EvaluationEntity newEvaluationEntity, Long id) {
 		newEvaluationEntity.setId(id);
-		this.saveEvaluationEntity(newEvaluationEntity);
+		this.saveEntity(newEvaluationEntity);
 		return newEvaluationEntity;
 	}
 }

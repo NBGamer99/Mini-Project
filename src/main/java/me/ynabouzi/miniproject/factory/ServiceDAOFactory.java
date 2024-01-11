@@ -1,8 +1,12 @@
-package me.ynabouzi.miniproject.util;
+package me.ynabouzi.miniproject.factory;
 
-import me.ynabouzi.miniproject.dao.*;
+import me.ynabouzi.miniproject.dao.DAOImpl.*;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 
 public class ServiceDAOFactory {
+	public enum ServiceType {
+		NOTE, EVALUATION, COURSE, COURSE_ITEM, PROFESSOR, USER, STUDENT
+	}
 
 	protected static CourseItemEntityDAOImpl courseItemService;
 	protected static EvaluationEntityDAOImpl evaluationService;
@@ -11,6 +15,28 @@ public class ServiceDAOFactory {
 	protected static StudentEntityDAOImpl studentService;
 	protected static UserEntityDAOImpl userService;
 	protected static NoteEntityDAOImpl noteService;
+
+
+	public static EntityDAO getService(ServiceType serviceType) {
+		switch (serviceType) {
+			case NOTE:
+				return getNoteService();
+			case EVALUATION:
+				return getEvaluationService();
+			case COURSE:
+				return getCourseService();
+			case USER:
+				return getUserService();
+			case STUDENT:
+				return getStudentService();
+			case PROFESSOR:
+				return getProfessorService();
+			case COURSE_ITEM:
+				return getCourseItemService();
+			default:
+				throw new IllegalArgumentException("Invalid service type");
+		}
+	}
 
 	public static NoteEntityDAOImpl getNoteService() {
 		if (noteService == null) {

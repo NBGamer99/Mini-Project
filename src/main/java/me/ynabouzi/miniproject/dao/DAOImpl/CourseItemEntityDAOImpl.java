@@ -1,15 +1,14 @@
-package me.ynabouzi.miniproject.dao;
-
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import me.ynabouzi.miniproject.model.CourseEntity;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
-public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
+public class CourseItemEntityDAOImpl implements EntityDAO<CourseItemEntity> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -19,14 +18,9 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	}
 
 	@Override
-	public CourseItemEntity saveCourseItem(CourseItemEntity courseItem) {
+	public CourseItemEntity saveEntity(CourseItemEntity courseItem) {
 		try {
 			entityManager.getTransaction().begin();
-//			entityManager.createNativeQuery("INSERT INTO course_items (name, coefficient, course_parent_id) VALUES (:name, :coefficient, :course_parent)")
-//					.setParameter("name", courseItem.getName())
-//					.setParameter("coefficient", courseItem.getCoefficient())
-//					.setParameter("course_parent", courseItem.getCourse_parent().getId())
-//					.executeUpdate();
 			entityManager.merge(courseItem);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
@@ -37,7 +31,7 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	}
 
 	@Override
-	public List<CourseItemEntity> getAllCourseItems() {
+	public List<CourseItemEntity> getAllEntities() {
 		List<CourseItemEntity> courseItemEntities = null;
 		try {
 			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c", CourseItemEntity.class)
@@ -47,8 +41,9 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 		}
 		return courseItemEntities;
 	}
+
 	@Override
-	public CourseItemEntity getCourseItemById(Long id) {
+	public CourseItemEntity getEntityById(Long id) {
 		CourseItemEntity courseItem = null;
 		try {
 			courseItem = entityManager.find(CourseItemEntity.class, id);
@@ -59,20 +54,7 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	}
 
 	@Override
-	public List<CourseItemEntity> getCourseItemByCourseId(Long id) {
-		List<CourseItemEntity> courseItemEntities = null;
-		try {
-			courseItemEntities = entityManager.createQuery("SELECT c FROM CourseItemEntity c WHERE c.course_parent.id = :id", CourseItemEntity.class)
-					.setParameter("id", id)
-					.getResultList();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return courseItemEntities;
-	}
-
-	@Override
-	public boolean deleteCourseItem(Long id) {
+	public boolean deleteEntity(Long id) {
 		CourseItemEntity courseItem = entityManager.find(CourseItemEntity.class, id);
 		if (courseItem != null) {
 			entityManager.getTransaction().begin();
@@ -84,9 +66,9 @@ public class CourseItemEntityDAOImpl implements CourseItemEntityDAO {
 	}
 
 	@Override
-	public CourseItemEntity updateCourseItem(CourseItemEntity newCourseItem, Long id) {
+	public CourseItemEntity updateEntity(CourseItemEntity newCourseItem, Long id) {
 		newCourseItem.setId(id);
-		this.saveCourseItem(newCourseItem);
+		this.saveEntity(newCourseItem);
 		return newCourseItem;
 	}
 }

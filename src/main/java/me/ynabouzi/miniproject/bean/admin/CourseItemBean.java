@@ -7,9 +7,9 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
@@ -25,7 +25,7 @@ import java.util.List;
 public class CourseItemBean implements Serializable {
 
 	private static ProfessorEntityDAOImpl professorService = ServiceDAOFactory.getProfessorService();
-	private static CourseEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseService();
+	private static CourseEntityDAOImpl courseService = ServiceDAOFactory.getCourseService();
 
 	private List<CourseEntity> availableCourses;
 	private Long selectedCourse;
@@ -35,19 +35,19 @@ public class CourseItemBean implements Serializable {
 	private Long selectedProfessor;
 
 	public CourseItemBean() {
-		availableProfessors = professorService.getAllProfessors();
-		availableCourses = courseItemService.getAllCourses();
+		availableProfessors = professorService.getAllEntities();
+		availableCourses = courseService.getAllEntities();
 	}
 
-	public void changeValues() {
-		this.setAvailableProfessors(professorService.getAllProfessors());
-		this.setAvailableCourses(courseItemService.getAllCourses());
+	public void updateAvailableEntities() {
+		this.setAvailableProfessors(professorService.getAllEntities());
+		this.setAvailableCourses(courseService.getAllEntities());
 	}
 
 	@PostConstruct
 	public void init() {
 		this.setCourseItemEntity(new CourseItemEntity());
-		setAvailableCourses(courseItemService.getAllCourses());
+		setAvailableCourses(courseService.getAllEntities());
 		if (selectedCourse != null)
 			selectedCourse = null;
 		if (selectedProfessor != null)

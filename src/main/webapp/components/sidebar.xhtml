@@ -28,19 +28,10 @@
                 <ui:repeat value="#{ProfessorUserBean.professorCourseItemsList}" var="courseItem">
                     <li class="menu-item">
                         <h:form>
-<!--                            <h:commandLink value="#{courseItem.name}"-->
-<!--                                           action="#{ProfessorCourseItemsNotesController.createStudentNotes()}"-->
-<!--                                           styleClass="menu-link gap-2">-->
-<!--                                &lt;!&ndash;                                <div data-i18n="Without menu"></div>&ndash;&gt;-->
-<!--                                <f:actionListener binding="#{ProfessorUserBean.selectCourseItem(courseItem)}"/>-->
-
-<!--                                <span class="badge bg-label-primary me-1 ">#{courseItem.validated}</span>-->
-<!--                            </h:commandLink>-->
                             <h:commandLink value="#{courseItem.name}"
                                            action="#{ProfessorCourseItemsNotesController.createStudentNotes()}"
                                            styleClass="menu-link gap-2"
                             >
-                                <!--                                           style="#{courseItem.validated ? 'pointer-events: none;' : ''}"-->
                                 <f:actionListener binding="#{ProfessorUserBean.selectCourseItem(courseItem)}"/>
 
                                 <span class="badge bg-label-#{courseItem.validated ? 'primary' : 'danger'} me-1">#{courseItem.validated ? 'Validated' : 'Not Validated'}</span>

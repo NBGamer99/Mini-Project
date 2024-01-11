@@ -1,13 +1,14 @@
-package me.ynabouzi.miniproject.dao;
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
-public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
+public class ProfessorEntityDAOImpl implements EntityDAO<ProfessorEntity> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -17,7 +18,7 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public ProfessorEntity saveProfessor(ProfessorEntity professor) {
+	public ProfessorEntity saveEntity(ProfessorEntity professor) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(professor);
@@ -30,7 +31,7 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public ProfessorEntity getProfessorById(Long id) {
+	public ProfessorEntity getEntityById(Long id) {
 		ProfessorEntity professor = null;
 		try {
 			professor = entityManager.find(ProfessorEntity.class, id);
@@ -40,7 +41,6 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 		return professor;
 	}
 
-	@Override
 	public ProfessorEntity getProfessorByUserID(Long id) {
 		ProfessorEntity professor = null;
 		try {
@@ -53,7 +53,6 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 		return professor;
 	}
 
-	@Override
 	public ProfessorEntity getProfessorByLastName(String name) {
 		ProfessorEntity professor = null;
 		try {
@@ -67,7 +66,7 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public List<ProfessorEntity> getAllProfessors() {
+	public List<ProfessorEntity> getAllEntities() {
 		List<ProfessorEntity> professorEntities = null;
 		try {
 			professorEntities = entityManager.createQuery("SELECT p FROM ProfessorEntity p", ProfessorEntity.class).getResultList();
@@ -78,9 +77,9 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public boolean deleteProfessor(Long id) {
-		ProfessorEntity professor = this.getProfessorById(id);
-		if(professor != null) {
+	public boolean deleteEntity(Long id) {
+		ProfessorEntity professor = this.getEntityById(id);
+		if (professor != null) {
 			entityManager.getTransaction().begin();
 			entityManager.remove(professor);
 			entityManager.getTransaction().commit();
@@ -90,9 +89,9 @@ public class ProfessorEntityDAOImpl implements ProfessorEntityDAO{
 	}
 
 	@Override
-	public ProfessorEntity updateProfessor(ProfessorEntity newProfessor, Long id) {
+	public ProfessorEntity updateEntity(ProfessorEntity newProfessor, Long id) {
 		newProfessor.setId(id);
-		this.saveProfessor(newProfessor);
+		this.saveEntity(newProfessor);
 		return newProfessor;
 	}
 }

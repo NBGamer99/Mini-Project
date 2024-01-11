@@ -6,10 +6,10 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.StudentEntity;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,11 +30,11 @@ public class StudentBean implements Serializable {
 	private StudentEntity studentEntity;
 
 	public StudentBean() {
-		availableCourses = courseService.getAllCourses();
+		availableCourses = courseService.getAllEntities();
 	}
 
 	public void changeValues() {
-		this.setAvailableCourses(courseService.getAllCourses());
+		this.setAvailableCourses(courseService.getAllEntities());
 	}
 
 	@PostConstruct

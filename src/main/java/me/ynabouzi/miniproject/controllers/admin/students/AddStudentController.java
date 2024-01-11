@@ -7,12 +7,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.StudentBean;
-import me.ynabouzi.miniproject.dao.CourseEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.model.StudentEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.StudentEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
+import me.ynabouzi.miniproject.dao.DAOImpl.StudentEntityDAOImpl;
 import java.util.List;
 
 @Setter
@@ -33,6 +32,7 @@ public class AddStudentController {
 public String addStudent() {
 	StudentEntity studentEntity = studentBean.getStudentEntity();
 
+
 	for (CourseEntity course : studentBean.getSelectedCourses()) {
 //		course.setStudents(studentEntity);
 		if (course.getStudents() != null)
@@ -40,10 +40,10 @@ public String addStudent() {
 		else
 			course.setStudents(List.of(studentEntity));
 
-		courseService.updateCourse(course, course.getId());
+		courseService.updateEntity(course, course.getId());
 	}
 	studentEntity.setCourse_student(studentBean.getSelectedCourses());
-	studentService.saveStudent(studentBean.getStudentEntity());
+	studentService.saveEntity(studentBean.getStudentEntity());
 
 	studentBean.init();
 	return "/admin/student/students-list.xhtml?faces-redirect=true";

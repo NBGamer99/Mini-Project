@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.EvaluationsBean;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.EvaluationEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.EvaluationEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.EvaluationEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
 import java.util.List;
@@ -50,12 +50,12 @@ public class AddEvaluationsController implements Serializable {
 
 		courseItem.setEvaluations(List.of(evaluationEntity, evaluationEntity2, evaluationEntity3, evaluationEntity4));
 
-		courseItemService.updateCourseItem(courseItem, selectedCourseItemId);
+		courseItemService.updateEntity(courseItem, selectedCourseItemId);
 
-		evaluationService.saveEvaluationEntity(evaluationEntity);
-		evaluationService.saveEvaluationEntity(evaluationEntity2);
-		evaluationService.saveEvaluationEntity(evaluationEntity3);
-		evaluationService.saveEvaluationEntity(evaluationEntity4);
+		evaluationService.saveEntity(evaluationEntity);
+		evaluationService.saveEntity(evaluationEntity2);
+		evaluationService.saveEntity(evaluationEntity3);
+		evaluationService.saveEntity(evaluationEntity4);
 
 		evaluationsBean.setIsCreated(true);
 	}
@@ -66,11 +66,14 @@ public class AddEvaluationsController implements Serializable {
 
 		System.out.println("Create Evaluation : " + evaluationsBean.getSelectedCourseItemId());
 
-		CourseItemEntity courseItem = courseItemService.getCourseItemById(selectedCourseItemId);
+		CourseItemEntity courseItem = courseItemService.getEntityById(selectedCourseItemId);
 
-		if (!evaluationsBean.getIsCreated())
+		List<EvaluationEntity> evaluations = courseItem.getEvaluations();
+
+		if (!evaluationsBean.getIsCreated() || (evaluations == null || evaluations.isEmpty()))
+		{
 			createAllEvaluations(courseItem, selectedCourseItemId);
-
+		}
 
 		evaluationsBean.setCreatedEvaluations(courseItem.getEvaluations());
 		evaluationsBean.getEvaluations();

@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import me.ynabouzi.miniproject.bean.admin.ProfessorBean;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.util.List;
 
@@ -37,13 +37,13 @@ public class AddProfessorController {
 		List<CourseItemEntity> courseItems = professorBean.getSelectedCoursesItems();
 
 
-		professorService.saveProfessor(professorBean.getProfessorEntity());
+		professorService.saveEntity(professorBean.getProfessorEntity());
 
 		professorEntity = professorService.getProfessorByLastName(professorEntity.getLastName());
 
 		for (CourseItemEntity courseItem : courseItems) {
 			courseItem.setProfessor(professorEntity);
-			courseItemService.updateCourseItem(courseItem, courseItem.getId());
+			courseItemService.updateEntity(courseItem, courseItem.getId());
 		}
 
 		professorBean.init();

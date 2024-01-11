@@ -1,11 +1,16 @@
 package me.ynabouzi.miniproject.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 
 @Getter
 @Setter
@@ -17,10 +22,10 @@ public class NoteEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int noteCC;
-	private int noteTP;
-	private int noteProject;
-	private int notePresentation;
+	private Integer noteCC;
+	private Integer noteTP;
+	private Integer noteProject;
+	private Integer notePresentation;
 
 	private boolean absentCC;
 	private boolean absentTP;

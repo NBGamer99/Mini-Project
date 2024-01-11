@@ -6,12 +6,11 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.model.CourseEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 import me.ynabouzi.miniproject.model.ProfessorEntity;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,16 +26,28 @@ public class ProfessorBean implements Serializable {
 	private static CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
 
 	private List<CourseItemEntity> availableCoursesItems;
-	private  List<CourseItemEntity> selectedCoursesItems;
+	private List<CourseItemEntity> selectedCoursesItems;
 	private ProfessorEntity professorEntity;
 
 	public ProfessorBean() {
 		this.setProfessorEntity(new ProfessorEntity());
-		availableCoursesItems = courseItemService.getAllCourseItems();
+		availableCoursesItems = courseItemService.getAllEntities();
+	}
+
+	public void filterAvailableCoursesItems() {
+		availableCoursesItems = courseItemService.getAllEntities();
+//		for (CourseItemEntity courseItem : availableCoursesItems) {
+//			System.out.println(courseItem.getProfessor());
+////			System.out.println(professorEntity.getId());
+////			System.out.println(courseItem.getProfessor().getId());
+//			if (courseItem.getProfessor() != null)
+//				availableCoursesItems.remove(courseItem);
+//		}
+		this.setAvailableCoursesItems(availableCoursesItems);
 	}
 
 	public void changeValues() {
-		this.setAvailableCoursesItems(courseItemService.getAllCourseItems());
+		filterAvailableCoursesItems();
 	}
 
 	@PostConstruct

@@ -1,26 +1,23 @@
 package me.ynabouzi.miniproject.bean.professor;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.bean.admin.UserBean;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.ProfessorEntityDAOImpl;
-import me.ynabouzi.miniproject.dao.UserEntityDAOImpl;
+import me.ynabouzi.miniproject.bean.login.UserBean;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.ProfessorEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.UserEntityDAOImpl;
+import me.ynabouzi.miniproject.enums.Users;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
-import me.ynabouzi.miniproject.model.ProfessorEntity;
 import me.ynabouzi.miniproject.model.StudentEntity;
 import me.ynabouzi.miniproject.model.UserEntity;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import java.util.List;
-
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -40,32 +37,30 @@ public class ProfessorUserBean implements Serializable {
 
 	private List<StudentEntity> selectedCourseItemStudents;
 
+	private double courseItemAverageGrade;
+
+	private double courseAverageGrade;
+
 	@Inject
 	private UserBean userBean;
 
 	public void init() {
-		if (userBean.isLoggedIn())
-		{
+		System.out.println("init professor user bean " + userBean.getRole());
+		setCourseAverageGrade(0);
+		setCourseItemAverageGrade(0);
+		if (userBean.isLoggedIn() && userBean.getRole().equals(Users.PROFESSOR)) {
 			this.setUser(userService.getUserByUsername(userBean.getUsername()));
 			this.setProfessorCourseItemsList(professorService.getProfessorByUserID(this.user.getId()).getCourseItems());
 		}
-//		System.out.println(this.getProfessorCourseItemsList());
 	}
 
-	public void selectCourseItem(CourseItemEntity courseItem)
-	{
+	public void selectCourseItem(CourseItemEntity courseItem) {
 		setSelectedCourseItem(courseItem);
-		if (courseItem != null)
-		{
+		if (courseItem != null) {
 			System.out.println("selected item done");
 			setSelectedCourseItemStudents(courseItem.getCourse().getStudents());
-//			System.out.println("Students : "+courseItem.getCourse().getStudents());
 		}
-//		setSelectedCourseItemStudents(courseItem.getCourse().getStudents());
-//		setSelectedCourseItemStudents(courseItem.getCourse().getStudents());
-//		return "/professor/index?faces-redirect=true";
 	}
-
 
 
 }

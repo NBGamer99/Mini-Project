@@ -1,29 +1,33 @@
 package me.ynabouzi.miniproject.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
-@Setter
 @Entity
+@Setter
 @Table(name = "professors", schema = "MINI_PROJET")
-public class ProfessorEntity {
+public class ProfessorEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String speciality;
 	private String firstName;
 	private String lastName;
-	private String speciality;
+
+	@Column(unique = true)
 	private String code;
 
-	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserEntity user_professor;
 
-	@OneToMany(mappedBy = "professor",cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "professor", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	private List<CourseItemEntity> courseItems;
 
 	public String FullNameTitle() {
@@ -50,9 +54,6 @@ public class ProfessorEntity {
 				", lastName='" + lastName + '\'' +
 				", speciality='" + speciality + '\'' +
 				", code='" + code + '\'' +
-//				", user_professor=" + user_professor +
-//				", courseItems=" + courseItems +
 				'}';
 	}
-
 }

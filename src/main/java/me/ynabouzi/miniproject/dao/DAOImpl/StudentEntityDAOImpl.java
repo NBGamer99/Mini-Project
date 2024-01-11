@@ -1,14 +1,14 @@
-package me.ynabouzi.miniproject.dao;
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.StudentEntity;
-import me.ynabouzi.miniproject.model.UserEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
 import java.util.List;
 
-public class StudentEntityDAOImpl implements StudentEntityDAO{
+public class StudentEntityDAOImpl implements EntityDAO<StudentEntity> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -18,7 +18,7 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public StudentEntity getStudentById(Long id) {
+	public StudentEntity getEntityById(Long id) {
 		StudentEntity student = null;
 		try {
 			student = entityManager.find(StudentEntity.class, id);
@@ -28,7 +28,6 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 		return student;
 	}
 
-	@Override
 	public StudentEntity getStudentByLastName(String name) {
 		StudentEntity student = null;
 		try {
@@ -42,7 +41,7 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public List<StudentEntity> getAllStudents() {
+	public List<StudentEntity> getAllEntities() {
 		List<StudentEntity> studentEntities = null;
 		try {
 			studentEntities = entityManager.createQuery("SELECT s FROM StudentEntity s", StudentEntity.class).getResultList();
@@ -53,7 +52,7 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public StudentEntity saveStudent(StudentEntity student) {
+	public StudentEntity saveEntity(StudentEntity student) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(student);
@@ -66,9 +65,9 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public boolean deleteStudent(Long id) {
-		StudentEntity student = this.getStudentById(id);
-		if(student != null) {
+	public boolean deleteEntity(Long id) {
+		StudentEntity student = this.getEntityById(id);
+		if (student != null) {
 			entityManager.getTransaction().begin();
 			entityManager.remove(student);
 			entityManager.getTransaction().commit();
@@ -78,9 +77,9 @@ public class StudentEntityDAOImpl implements StudentEntityDAO{
 	}
 
 	@Override
-	public StudentEntity updateStudent(StudentEntity newStudent, Long id) {
+	public StudentEntity updateEntity(StudentEntity newStudent, Long id) {
 		newStudent.setId(id);
-		this.saveStudent(newStudent);
+		this.saveEntity(newStudent);
 		return newStudent;
 	}
 }

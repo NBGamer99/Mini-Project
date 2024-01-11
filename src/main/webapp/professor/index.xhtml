@@ -10,7 +10,7 @@
 <f:metadata>
     <f:viewAction action="#{ProfessorCourseItemsListController.initialize()}"/>
     <f:viewAction
-            action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+            action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
 </f:metadata>
 
 <h:head>
@@ -85,12 +85,12 @@
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                    <ui:fragment rendered="#{empty ProfessorUserBean.selectedCourseItem}">
+                                    <ui:fragment
+                                            rendered="#{empty ProfessorUserBean.selectedCourseItem or empty ProfessorUserBean.selectedCourseItemStudents}">
                                         <tr class="text-center">
                                             <td colspan="6">Nothing to show</td>
                                         </tr>
                                     </ui:fragment>
-
                                     <h:form id="first">
                                         <div class="card-header d-flex align-items-center justify-content-between">
                                             <h5 class="mb-0">Students Notes List</h5>
@@ -99,42 +99,77 @@
                                                 <div class="float-end m-2 ">
                                                     <div class="col-sm-10">
                                                         <h:commandButton value="Clear Notes" class="btn btn-danger"
-                                                                         action="#{ProfessorCourseItemsNotesController.clearStudentNotes()}"/>
+                                                                         action="#{ProfessorCourseItemsNotesController.clearStudentNotes()}"
+                                                                         disabled="#{empty ProfessorUserBean.selectedCourseItem or empty ProfessorUserBean.selectedCourseItemStudents}"
+                                                        />
                                                     </div>
                                                 </div>
-                                                <div class="float-end m-2">
-                                                    <div class="col-sm-10 ">
-                                                        <h:commandButton value="Save Temporarly Notes"
-                                                                         class="btn btn-primary"/>
-                                                    </div>
-                                                </div>
+                                                <!--                                                <div class="float-end m-2">-->
+                                                <!--                                                    <div class="col-sm-10 ">-->
+                                                <!--                                                        <h:commandButton value="Save Temporarly Notes"-->
+                                                <!--                                                                         class="btn btn-primary"-->
+                                                <!--                                                                         disabled="#{empty ProfessorUserBean.selectedCourseItem or empty ProfessorUserBean.selectedCourseItemStudents}"-->
+                                                <!--                                                        />-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
                                                 <div class="float-end m-2">
                                                     <div class="col-sm-10">
                                                         <h:commandButton value="Validate"
-                                                                         class="btn btn-success"
+                                                                         class="btn btn-primary"
+                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
                                                                          onclick="validateAndSubmit()"
-                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                                         disabled="#{empty ProfessorUserBean.selectedCourseItem or empty ProfessorUserBean.selectedCourseItemStudents}"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div class="float-end m-2">
-                                                    <div class="col-sm-10">
+                                                    <div class="col-2 input-group">
+                                                        <!-- Input group for Course Average Grade button -->
+                                                        <!--                                                        <span class="input-group-text col-4">-->
+                                                        <!--                                                        <h:inputText id="saveExcel" styleClass="form-control" placeholder="Course Average Grade" disabled="true" value="#{ProfessorUserBean.courseAverageGrade}"/>-->
+                                                        <!--                                                        </span>-->
+                                                        <h:commandButton value="Export"
+                                                                         class="btn btn-danger"
+                                                                         action="#{ProfessorCourseItemsNotesController.exportToExcel()}"
+                                                                         disabled="#{not ProfessorUserBean.selectedCourseItem.validated}"
+
+                                                        />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="float-end m-2">
+                                                    <div class="col-1 input-group">
+                                                        <!-- Input group for Course Average Grade button -->
+<!--                                                        <span class="input-group-text col-4">-->
+                                                           <h:inputText id="courseAvgInput" styleClass="form-control" placeholder="Course Average Grade" disabled="true" value="#{ProfessorUserBean.courseAverageGrade}"/>
+<!--                                                        </span>-->
                                                         <h:commandButton value="Course Average Grade"
-                                                                         class="btn btn-secondary"
-                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                                         class="btn btn-primary"
+                                                                         action="#{ProfessorCourseItemsGradeCalculatorController.calculateCourseAverageGrade()}"
                                                                          disabled="#{not ProfessorUserBean.selectedCourseItem.validated}"
+
                                                         />
                                                     </div>
                                                 </div>
+
+
+
                                                 <div class="float-end m-2">
-                                                    <div class="col-sm-10">
+                                                    <div class="col-1 input-group">
+                                                        <!-- Input group for Course Item Average Grade button -->
+<!--                                                        <span class="input-group-text col-2">-->
+                                                            <h:inputText id="courseItemAvgInput" styleClass="form-control" placeholder="Course Item Average Grade" disabled="true" value="#{ProfessorUserBean.courseItemAverageGrade}"/>
+<!--                                                        </span>-->
+<!--                                                        <h:outputText value="#{ProfessorUserBean.selectedCourseItem}"/>-->
                                                         <h:commandButton value="Course Item Average Grade"
-                                                                         class="btn btn-info"
-                                                                         action="#{ProfessorCourseItemsNotesController.saveStudentNotes()}"
+                                                                         class="btn btn-primary"
+                                                                         action="#{ProfessorCourseItemsGradeCalculatorController.handleCourseItemAverageChange()}"
                                                                          disabled="#{not ProfessorUserBean.selectedCourseItem.validated}"
                                                         />
                                                     </div>
                                                 </div>
+
 
                                             </div>
 
@@ -156,12 +191,12 @@
                                                         <h:inputText
                                                                 value="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).noteCC}"
                                                                 class="form-control"
-                                                                required="true"
                                                                 id="coefficientCC"
                                                                 label="Coefficient CC"
                                                                 converterMessage="Coefficient must be a number"
                                                                 requiredMessage="Coefficient is required"
                                                                 validatorMessage="Value must be between 0 and 20"
+                                                                disabled="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).absentCC}"
                                                         >
                                                             <f:validateLongRange minimum="0" maximum="20"/>
                                                         </h:inputText>
@@ -177,12 +212,12 @@
                                                         <h:inputText
                                                                 value="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).noteTP}"
                                                                 class="form-control"
-                                                                required="true"
                                                                 id="coefficientTP"
                                                                 label="Coefficient TP"
                                                                 converterMessage="Coefficient must be a number"
                                                                 requiredMessage="Coefficient is required"
                                                                 validatorMessage="Value must be between 0 and 20"
+                                                                disabled="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).absentTP}"
 
                                                         >
                                                             <f:validateLongRange minimum="0" maximum="20"/>
@@ -197,12 +232,12 @@
                                                         <h:inputText
                                                                 value="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).noteProject}"
                                                                 class="form-control"
-                                                                required="true"
                                                                 id="CoefficientProject"
                                                                 label="Coefficient Project"
                                                                 converterMessage="Coefficient must be a number"
                                                                 requiredMessage="Coefficient is required"
                                                                 validatorMessage="Value must be between 0 and 20"
+                                                                disabled="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).absentProject}"
 
                                                         >
                                                             <f:validateLongRange minimum="0" maximum="20"/>
@@ -218,12 +253,12 @@
                                                         <h:inputText
                                                                 value="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).notePresentation}"
                                                                 class="form-control"
-                                                                required="true"
                                                                 id="coefficientPresentation"
                                                                 label="Coefficient Presentation"
                                                                 converterMessage="Coefficient must be a number"
                                                                 requiredMessage="Coefficient is required"
                                                                 validatorMessage="Value must be between 0 and 20"
+                                                                disabled="#{NotesBean.notesByCourseItem.get(ProfessorUserBean.selectedCourseItem.id).get(loop.index).absentPresentation}"
 
                                                         >
                                                             <f:validateLongRange minimum="0" maximum="20"/>
@@ -335,8 +370,6 @@
                                                 </tr>
                                             </ui:repeat>
                                         </ui:fragment>
-
-
                                     </h:form>
 
 
@@ -369,13 +402,13 @@
     </div>
     <!-- / Layout wrapper -->
 
-    <script >
+    <script>
         function validateAndSubmit() {
             var inputs = document.querySelectorAll('input[type="text"]');
             var shouldSubmit = true;
             var found = false;
 
-            inputs.forEach(function(input) {
+            inputs.forEach(function (input) {
                 var value = parseFloat(input.value);
                 if (value === 0 || value === 20) {
                     found = true;

@@ -8,7 +8,7 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 <f:metadata>
-    <f:viewAction action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+    <f:viewAction action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
 </f:metadata>
 
 <ui:composition template="../../template.xhtml">
@@ -95,23 +95,9 @@
                                         <h:message for="courseSemester" styleClass="invalid-feedback" />
                                     </div>
                                 </div>
-
-<!--                                <div class="row mb-3">-->
-<!--                                    <label class="col-sm-2 col-form-label" for="CourseItems">Course Items</label>-->
-<!--                                    <div class="col-sm-10">-->
-<!--                                        <div class="input-group input-group-merge">-->
-<!--                                            <span class="input-group-text"><i class="bx bxs-graduation"></i></span>-->
-<!--                                            <h:selectManyListbox id="CourseItems" value="#{CourseBean.selectedCourseItems}" class="form-select">-->
-<!--                                                <f:selectItems value="#{CourseBean.availableCourseItems}" var="courseItem" itemValue="#{courseItem}" itemLabel="#{courseItem.name}" />-->
-<!--                                            </h:selectManyListbox>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-                                <!-- Include other fields for updating -->
                                 <div class="row justify-content-end">
                                     <div class="col-sm-10">
-                                        <h:commandButton value="Update Course" action="#{AdminUpdateCoursesController.updateCourse()}" class="btn btn-primary"/>
+                                        <h:commandButton value="Update Course" class="btn btn-primary"/>
                                     </div>
                                 </div>
                             </h:form>

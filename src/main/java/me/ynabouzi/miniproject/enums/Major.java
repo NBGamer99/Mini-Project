@@ -1,11 +1,12 @@
 package me.ynabouzi.miniproject.enums;
 
 public enum Major {
-	IID("Infomatique et Ingénierie des Données"),
+	GE("Génie Electrique"),
 	GI("Génie Informatique"),
-	GPEE("Génie des Procédés et de l'Environnement"),
-	IRIC("Informatique et Réseaux Industriels et Communication"),
-	GRT("Génie Réseaux et Télécommunications");
+	GRT("Génie Réseaux et Télécommunications"),
+	IID("Infomatique et Ingénierie des Données"),
+	IRIC("Informatique et Réseaux et Communication"),
+	GPEE("Génie des Procédés et de l'Environnement");
 
 	private final String label;
 

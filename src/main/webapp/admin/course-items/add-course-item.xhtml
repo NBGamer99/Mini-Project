@@ -9,9 +9,9 @@
 
 >
 <f:metadata>
-    <f:viewAction action="#{CourseItemBean.changeValues()}"/>
+    <f:viewAction action="#{CourseItemBean.updateAvailableEntities()}"/>
     <f:viewAction
-            action="#{LoginController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
+            action="#{ForbiddenAccessController.redirectToLoginIfNotLoggedIn(facesContext.getCurrentInstance().viewRoot.viewId)}"/>
 </f:metadata>
 
 

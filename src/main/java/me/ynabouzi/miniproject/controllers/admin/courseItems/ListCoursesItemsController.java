@@ -6,8 +6,8 @@ import jakarta.inject.Named;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.ynabouzi.miniproject.util.ServiceDAOFactory;
-import me.ynabouzi.miniproject.dao.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.dao.DAOImpl.CourseItemEntityDAOImpl;
+import me.ynabouzi.miniproject.factory.ServiceDAOFactory;
 import me.ynabouzi.miniproject.model.CourseItemEntity;
 
 import java.io.Serializable;
@@ -20,24 +20,28 @@ import java.util.List;
 @RequestScoped
 public class ListCoursesItemsController implements Serializable {
 
-	private List<CourseItemEntity> courseItemEntities;
-
 	private static CourseItemEntityDAOImpl courseItemService = ServiceDAOFactory.getCourseItemService();
-
+	private List<CourseItemEntity> courseItemEntities;
 
 	@PostConstruct
 	public void init() {
-		courseItemEntities = fetchCoursesItemsFromBackend();
+		fetchCoursesItemsFromBackend();
 	}
 
-	public List<CourseItemEntity> fetchCoursesItemsFromBackend() {
-		courseItemEntities = courseItemService.getAllCourseItems();
-		return courseItemEntities;
+	public void fetchCoursesItemsFromBackend() {
+		courseItemEntities = courseItemService.getAllEntities();
 	}
 
 	public void deleteCourseItem(Long id) {
-		if (courseItemService.deleteCourseItem(id)) {
-			this.init();
+		CourseItemEntity courseItem = courseItemService.getEntityById(id);
+		unsetAttributes(courseItem);
+		if (courseItemService.deleteEntity(id)) {
+			fetchCoursesItemsFromBackend();
 		}
+	}
+
+	private void unsetAttributes(CourseItemEntity courseItem) {
+		if (courseItem.getProfessor() != null)
+			courseItem.getProfessor().getCourseItems().remove(courseItem);
 	}
 }

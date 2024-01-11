@@ -1,8 +1,9 @@
-package me.ynabouzi.miniproject.dao;
+package me.ynabouzi.miniproject.dao.DAOImpl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import me.ynabouzi.miniproject.dao.EntityDAO;
 import me.ynabouzi.miniproject.model.CourseEntity;
 import me.ynabouzi.miniproject.util.EntityManagerHelper;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 
 @Transactional
-public class CourseEntityDAOImpl implements CourseEntityDAO{
+public class CourseEntityDAOImpl implements EntityDAO<CourseEntity> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -20,7 +21,7 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public CourseEntity saveCourse(CourseEntity course) {
+	public CourseEntity saveEntity(CourseEntity course) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(course);
@@ -33,7 +34,7 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public CourseEntity getCourseById(Long id) {
+	public CourseEntity getEntityById(Long id) {
 		CourseEntity course = null;
 		try {
 			course = entityManager.find(CourseEntity.class, id);
@@ -44,7 +45,7 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public List<CourseEntity> getAllCourses() {
+	public List<CourseEntity> getAllEntities() {
 		List<CourseEntity> courseEntities = null;
 		try {
 			courseEntities = entityManager.createQuery("SELECT c FROM CourseEntity c", CourseEntity.class).getResultList();
@@ -55,7 +56,7 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public boolean deleteCourse(Long id) {
+	public boolean deleteEntity(Long id) {
 		CourseEntity course = entityManager.find(CourseEntity.class, id);
 		if (course != null) {
 			entityManager.getTransaction().begin();
@@ -67,9 +68,9 @@ public class CourseEntityDAOImpl implements CourseEntityDAO{
 	}
 
 	@Override
-	public CourseEntity updateCourse(CourseEntity Newcourse, Long oldId) {
+	public CourseEntity updateEntity(CourseEntity Newcourse, Long oldId) {
 		Newcourse.setId(oldId);
-		this.saveCourse(Newcourse);
+		this.saveEntity(Newcourse);
 		return Newcourse;
 	}
 }
